@@ -10,7 +10,6 @@ const personel = require("../../../../../MODELS/Datalake/personel");
 const invite = require("../../../../../MODELS/Datalake/invite");
 const { checkHours, comparedate } = require("../../../../../HELPERS/functions");
 const Task_profile = require("../../../../../MODELS/Economy/Task_profile");
-const task_profile = require("../../../../../MODELS/Economy/Task_profile");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {
@@ -45,8 +44,7 @@ class RolSeçim extends Component {
         const nextRol = hoistroller.reverse().find(r => r.rawPosition > rawrol.rawPosition);
         const Duties = profile.active;
         const myOldDuties = profile.done;
-        const myData = await task_profile.find({ _id: mentioned.user.id });
-        const RoleData = await Task_roles.findOne({ _id: myData.role });
+        const RoleData = await Task_roles.findOne({ _id: profile.role });
 
         if (!RoleData) return await ctx.send(`Sahip olduğun bir yetki bulunamadı!`, {
             ephemeral: true
@@ -176,7 +174,7 @@ class RolSeçim extends Component {
         ${emojis.get("tasks_done").value()} Bitmiş görevler:
         ${strArrayDone.join('\n')}
         ${bar(myOldDuties.tasks.map(task => task.points).reduce((a, c) => a + c, 0), RoleData.passPoint)} Toplam puan: \`${myOldDuties.tasks.map(task => task.points)}/${RoleData.passPoint}\`
-        ${emojis.get("point_time").value()} ${nextRol} rolüne yükselmek için ${RoleData.expiresIn - checkHours(myData.started)} saatin var!
+        ${emojis.get("point_time").value()} ${nextRol} rolüne yükselmek için ${RoleData.expiresIn - checkHours(profile.started)} saatin var!
         `);
         await ctx.send({
             embeds: [embed],
