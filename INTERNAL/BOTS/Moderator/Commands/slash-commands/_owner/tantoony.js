@@ -371,6 +371,9 @@ module.exports = class JailCommand extends SlashCommand {
                         await BackupData.create({ _id: m.user.id, roles: m.roles.cache.array().map(r => r.name) });
                     });
                 }
+                await ctx.send("OK BOOMER", {
+                    ephemeral: true
+                });
                 break;
 
             default:
