@@ -1,5 +1,5 @@
 const Permissions = require('../../../MODELS/Temprorary/permit');
-const Punishments = require('../../../MODELS/StatUses/crime');
+const Punishments = require('../../../MODELS/StatUses/stat_crime');
 const low = require('lowdb');
 
 class GuildBanAdd {

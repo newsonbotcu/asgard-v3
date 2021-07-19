@@ -1,6 +1,6 @@
 const low = require('lowdb');
 const wait = require('util').promisify(setTimeout);
-const Memberz = require('../../../MODELS/Datalake/MemberRoles');
+const Memberz = require('../../../MODELS/Datalake/backup_member');
 
 class Ready {
 
