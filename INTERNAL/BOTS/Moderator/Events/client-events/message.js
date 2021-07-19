@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 const afkdata = require('../../../../MODELS/Datalake/afk');
 const Tagli = require('../../../../MODELS/Datalake/tagged');
 const { comparedate, checkMins, checkHours } = require('../../../../HELPERS/functions');
+const stat_msg = require('../../../../MODELS/StatUses/stat_msg');
 module.exports = class {
     constructor(client) {
         this.client = client;
@@ -94,15 +95,29 @@ module.exports = class {
                 }
             }
         }
-        /*
-        const pointData = await Points_profile.findOne({ _id: message.author.id });
-        if (pointData) {
-            const pointConfig = await Points_config.findOne({ _id: pointData.role });
-            if (pointData) await Points_profile.updateOne({ _id: message.author.id }, {
-                $inc: { msgPoints: pointConfig.message }
+        const msgStat = await stat_msg.findOne({ _id: message.author.id });
+        if (!msgStat) {
+            await stat_msg.create({
+                _id: message.author.id,
+                records: [
+                    {
+                        channel: message.channel.id,
+                        content: message.content,
+                        created: new Date()
+                    }
+                ]
+            });
+        } else {
+            await stat_msg.updateOne({ _id: message.author.id }, {
+                $push: {
+                    records: {
+                        channel: message.channel.id,
+                        content: message.content,
+                        created: new Date()
+                    }
+                }
             });
         }
-        */
         if (message.content === 'onay') {
             const tagData = await Tagli.find({ target: message.author.id });
             if (tagData && (tagData.length !== 0)) {
