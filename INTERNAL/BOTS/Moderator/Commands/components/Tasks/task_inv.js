@@ -152,7 +152,7 @@ class RolSeçim extends Component {
 
                 case "message":
                     const messageXp = await stat_msg.findOne({ _id: mentioned.user.id });
-                    const msgPoints = messageXp.records.filter(data => comparedate(data.created) < comparedate(curTask.created)).map(data => data.xp).reduce((a, c) => a + c, 0);
+                    const msgPoints = messageXp.records.filter(data => comparedate(data.created) < comparedate(curTask.created)).length;
                     strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Mesaj: \`${msgPoints}/${curTask.count}\`(${curTask.points} puan)`);
                     break;
 
