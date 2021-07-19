@@ -1,15 +1,21 @@
 const { Client, Collection } = require('discord.js');
 const FileSync = require('lowdb/adapters/FileSync');
 const events = require('events');
+const { Model } = require('mongoose');
 class Tantoony extends Client {
     constructor(options) {
         super(options);
-        
+
         this.config = require('../HELPERS/config');
         this.logger = require("../HELPERS/logger");
         this.functions = require("../HELPERS/functions");
         this.adapters = file => new FileSync(`../../BASE/_${file}.json`);
-
+        /**
+         * 
+         * @param {string} model model ismi
+         * @returns {Model} Mongo Modeli
+         */
+        this.models = model => client.connection[model];
         this.models = new Collection();
         this.commands = new Collection();
         this.aliases = new Collection();
