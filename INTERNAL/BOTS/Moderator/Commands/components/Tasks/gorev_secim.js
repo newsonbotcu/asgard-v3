@@ -26,7 +26,9 @@ class RolSeçim extends Component {
         const guild = client.guilds.cache.get(ctx.guildID);
         const mentioned = guild.members.cache.get(ctx.user.id);
         const myProfile = await task_profile.findOne({ _id: mentioned.user.id });
-
+        if (!myProfile) return await ctx.send(`Henüz bir yetkili profiline sahip değilsin.`, {
+            ephemeral: true
+        });
         const myRol = guild.roles.cache.get(myProfile.role)
         let strArray = [];
         const ggtask = myProfile.active.filter(task => !ctx.data.data.values.includes(task.type));
