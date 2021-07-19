@@ -2,7 +2,6 @@ const { SlashCommand, CommandOptionType, ApplicationCommandPermissionType } = re
 const low = require('lowdb');
 const Discord = require('discord.js');
 const taskAwards = require('../../../../../MODELS/Economy/Task_roles');
-const taskDuties = require('../../../../../MODELS/Economy/Task_duty');
 const IDS = require('../../../../../BASE/personels.json');
 const gen = require('shortid');
 
@@ -27,6 +26,18 @@ module.exports = class JailCommand extends SlashCommand {
                             type: CommandOptionType.INTEGER,
                             name: "puan",
                             description: "gerekli puan",
+                            required: true
+                        },
+                        {
+                            type: CommandOptionType.INTEGER,
+                            name: "limit",
+                            description: "Geçme limiti",
+                            required: true
+                        },
+                        {
+                            type: CommandOptionType.INTEGER,
+                            name: "gün",
+                            description: "Rolde kalma süresi",
                             required: true
                         }
                     ]
@@ -121,13 +132,17 @@ module.exports = class JailCommand extends SlashCommand {
                 if (!roleData) {
                     await taskAwards.create({
                         _id: Object.values(ctx.options)[0]['rol'],
-                        point: Object.values(ctx.options)[0]['puan'],
-                        salary: 0
+                        requiredPoint: Object.values(ctx.options)[0]['puan'],
+                        passPoint: Object.values(ctx.options)[0]['limit'],
+                        expiresIn: Object.values(ctx.options)[0]['gün'],
+                        tasks: []
                     });
                 } else {
                     await taskAwards.updateOne({ _id: Object.values(ctx.options)[0]['rol'] }, {
                         $set: {
-                            point: Object.values(ctx.options)[0]['limit']
+                            requiredPoint: Object.values(ctx.options)[0]['puan'],
+                            passPoint: Object.values(ctx.options)[0]['limit'],
+                            expiresIn: Object.values(ctx.options)[0]['gün']
                         }
                     });
                 }
@@ -139,23 +154,19 @@ module.exports = class JailCommand extends SlashCommand {
                 break;
 
             case "ekle":
-                const TaskData = await taskDuties.findOne({ roleID: Object.values(ctx.options)[0]['rol'], type: Object.values(ctx.options)[0]['tür'] });
-                if (!TaskData) {
-                    await taskDuties.create({
-                        _id: gen.generate(),
-                        roleID: Object.values(ctx.options)[0]['rol'],
-                        type: Object.values(ctx.options)[0]['tür'],
-                        count: Object.values(ctx.options)[0]['sayı'],
-                        points: Object.values(ctx.options)[0]['puan']
-                    });
-                } else {
-                    await taskDuties.updateOne({ roleID: Object.values(ctx.options)[0]['rol'], type: Object.values(ctx.options)[0]['tür'] }, {
-                        $set: {
+                const TaskData = await taskAwards.findOne({ _id: Object.values(ctx.options)[0]['rol'] });
+                if (!TaskData) return await ctx.send(`Bu rol için gerekli yapılandırma henüz yapılmamış.`, {
+                    ephemeral: true
+                });
+                await taskAwards.updateOne({ _id: Object.values(ctx.options)[0]['rol'] }, {
+                    $push: {
+                        tasks: {
+                            type: Object.values(ctx.options)[0]['tür'],
                             count: Object.values(ctx.options)[0]['sayı'],
                             points: Object.values(ctx.options)[0]['puan']
                         }
-                    });
-                }
+                    }
+                });
                 const ekleEmbed = new Discord.MessageEmbed().setDescription(`<@&${Object.values(ctx.options)[0]['rol']}> rolü için **${Object.values(ctx.options)[0]['tür']}** görevi ayarlandı!`);
                 await ctx.send({
                     embeds: [ekleEmbed]

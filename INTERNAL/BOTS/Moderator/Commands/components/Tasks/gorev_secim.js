@@ -40,6 +40,9 @@ class RolSeçim extends Component {
         for (let index = 0; index < ctx.data.data.values.length; index++) {
             const ctxValue = ctx.data.data.values[index];
             const RoleData = await Task_roles.findOne({ _id: myRol.id });
+            if (!RoleData) return await ctx.send(`Sahip olduğun rolde herhangi bir görev yok!`), {
+                ephemeral: true
+            };
             const Duty = RoleData.tasks.find(task => task.type === ctxValue);
             if (!Duty) {
                 strArray.push(`Sahip olduğun rolde böyle bir görev yok: \`${ctxValue}\``);
