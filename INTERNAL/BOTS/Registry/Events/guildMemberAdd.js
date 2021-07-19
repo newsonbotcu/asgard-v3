@@ -122,7 +122,6 @@ class GuildMemberAdd {
         }
         await member.roles.add(roles.get("welcome").value());
         member.guild.channels.cache.get(channels.get("welcome").value()).send(stripIndents`
-        💯 ASGARD KILL ZONE
         ${emojis.get("pando1").value()} Asgard'a hoş geldin ${member}, artık ${rain(client, member.guild.memberCount)} kişiyiz!
         Hesabın ${rain(client, checkDays(member.user.createdAt))} gün önce oluşturulmuştur.
         ${emojis.get("pando2").value()} Seni buraya getiren kişi: ${davetci ? (davetci.username || "Özel URL") : "Özel URL"}
