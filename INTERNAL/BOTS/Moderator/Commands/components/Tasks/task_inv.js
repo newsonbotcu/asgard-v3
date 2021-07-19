@@ -174,7 +174,7 @@ class RolSeçim extends Component {
         ●▬▬▬▬▬▬▬▬▬▬●
         ${emojis.get("tasks_done").value()} Bitmiş görevler:
         ${strArrayDone.join('\n')}
-        ${bar(myOldDuties.map(task => task.points).reduce((a, c) => a + c, 0), RoleData.passPoint)} Toplam puan: \`${myOldDuties.map(task => task.points)}/${RoleData.passPoint}\`
+        ${bar(myOldDuties.map(task => task.points).reduce((a, c) => a + c, 0), RoleData.passPoint)} Toplam puan: \`${myOldDuties.map(task => task.points).reduce((a, c) => a + c, 0)}/${RoleData.passPoint}\`
         ${emojis.get("point_time").value()} ${nextRol} rolüne yükselmek için ${RoleData.expiresIn - checkHours(profile.started)} saatin var!
         `);
         await ctx.send({
