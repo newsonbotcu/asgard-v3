@@ -122,42 +122,42 @@ class RolSeçim extends Component {
             switch (oldTask.type) {
                 case "invite":
                     const Invites = await invite.find({ claim: mentioned.user.id });
-                    const invitePoints = Invites.filter(doc => comparedate(doc.created) < comparedate(curTask.created)).length;
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_invite").value()} Davet: \`${invitePoints}/${curTask.count}\`(+${curTask.points} puan)`);
+                    const invitePoints = Invites.filter(doc => comparedate(doc.created) < comparedate(oldTask.created)).length;
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_invite").value()} Davet: \`${invitePoints}/${oldTask.count}\`(+${oldTask.points} puan)`);
                     break;
 
                 case "registry":
                     const Registries = await membership.find({ executor: mentioned.user.id });
-                    const registryPoints = Registries.filter(data => comparedate(data.created) < comparedate(curTask.created)).length;
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_registry").value()} Kayıt: \`${registryPoints}/${curTask.count}\`(${curTask.points} puan)`);
+                    const registryPoints = Registries.filter(data => comparedate(data.created) < comparedate(oldTask.created)).length;
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_registry").value()} Kayıt: \`${registryPoints}/${oldTask.count}\`(${oldTask.points} puan)`);
                     break;
 
                 case "tagged":
                     const Taggeds = await tagged.find({ claim: mentioned.user.id });
-                    const taggedPoints = Taggeds.filter(doc => comparedate(doc.created) < comparedate(curTask.created)).length;
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_tagged").value()} Taglı: \`${taggedPoints}/${curTask.count}\`(${curTask.points} puan)`);
+                    const taggedPoints = Taggeds.filter(doc => comparedate(doc.created) < comparedate(oldTask.created)).length;
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_tagged").value()} Taglı: \`${taggedPoints}/${oldTask.count}\`(${oldTask.points} puan)`);
                     break;
 
                 case "auth":
                     const Personels = await personel.find({ claim: mentioned.user.id });
-                    const personelPoints = Personels.filter(doc => comparedate(doc.created) < comparedate(curTask.created)).length;
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Yetkili: \`${personelPoints}/${curTask.count}\`(${curTask.points} puan)`);
+                    const personelPoints = Personels.filter(doc => comparedate(doc.created) < comparedate(oldTask.created)).length;
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Yetkili: \`${personelPoints}/${oldTask.count}\`(${oldTask.points} puan)`);
                     break;
 
                 case "voicexp":
                     const voiceXp = await stat_voice.findOne({ _id: mentioned.user.id });
-                    const voicePoints = voiceXp.records.filter(data => comparedate(data.created) < comparedate(curTask.created)).map(data => data.xp).reduce((a, c) => a + c, 0);
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Ses: \`${voicePoints}/${curTask.count}\`(${curTask.points} puan)`);
+                    const voicePoints = voiceXp.records.filter(data => comparedate(data.created) < comparedate(oldTask.created)).map(data => data.xp).reduce((a, c) => a + c, 0);
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Ses: \`${voicePoints}/${oldTask.count}\`(${oldTask.points} puan)`);
                     break;
 
                 case "message":
                     const messageXp = await stat_msg.findOne({ _id: mentioned.user.id });
-                    const msgPoints = messageXp.records.filter(data => comparedate(data.created) < comparedate(curTask.created)).length;
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Mesaj: \`${msgPoints}/${curTask.count}\`(${curTask.points} puan)`);
+                    const msgPoints = messageXp.records.filter(data => comparedate(data.created) < comparedate(oldTask.created)).length;
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_auth").value()} Mesaj: \`${msgPoints}/${oldTask.count}\`(${oldTask.points} puan)`);
                     break;
 
                 case "bonus":
-                    strArrayDone.push(`${emojis.get("point_bonus").value()} Bonus: **${curTask.points} puan**`);
+                    strArrayDone.push(`${emojis.get("point_bonus").value()} Bonus: **${oldTask.points} puan**`);
                     break;
                 default:
                     break;
