@@ -31,7 +31,7 @@ class JailSorgu extends Command {
         \`Komutu Kullanan:\` ${message.guild.members.cache.get(jailData.executor) || `Sunucuda değil (${jailData.executor})`}
         \`Jail türü:\` ${jailData.type}
         \`Açılacağı tarih:\` ${(jailData.type === "temp") ? jailData.duration - checkDays(jailData.created) : "Açılmayacak"}
-        `).setColor('#2f3136').setFooter("Pasific Forever <3");
+        `).setColor('#2f3136').setFooter("Asgard ❤️ Tantoony");
         await message.channel.send(embed);
         client.cmdCooldown[message.author.id][this.info.name] = Date.now() + this.info.cooldown;
     }
