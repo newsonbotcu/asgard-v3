@@ -71,8 +71,8 @@ class RolSeçim extends Component {
             return str;
         }
         const strArrayCur = [];
-        for (let index = 0; index < Duties.tasks.length; index++) {
-            const curTask = Duties.tasks[index];
+        for (let index = 0; index < Duties.length; index++) {
+            const curTask = Duties[index];
             switch (curTask.type) {
                 case "invite":
                     const Invites = await invite.find({ claim: mentioned.user.id });
@@ -116,8 +116,8 @@ class RolSeçim extends Component {
         }
 
         const strArrayDone = [];
-        for (let index = 0; index < myOldDuties.tasks.length; index++) {
-            const oldTask = myOldDuties.tasks[index];
+        for (let index = 0; index < myOldDuties.length; index++) {
+            const oldTask = myOldDuties[index];
             switch (oldTask.type) {
                 case "invite":
                     const Invites = await invite.find({ claim: mentioned.user.id });
