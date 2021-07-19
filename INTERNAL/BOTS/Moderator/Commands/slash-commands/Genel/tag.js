@@ -22,6 +22,7 @@ module.exports = class AvatarCommand extends SlashCommand {
     }
 
     async run(ctx) {
+        await this.creator.syncCommandPermissions();
         const client = ctx.creator.client;
         const utils = await low(client.adapters('utils'));
         const roles = await low(client.adapters('roles'));
