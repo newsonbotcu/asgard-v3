@@ -69,11 +69,11 @@ module.exports = class JailCommand extends SlashCommand {
                                 },
                                 {
                                     name: "Ses Xp",
-                                    value: "voice"
+                                    value: "voicexp"
                                 },
                                 {
                                     name: "Mesaj",
-                                    value: "chat"
+                                    value: "messagexp"
                                 },
                                 {
                                     name: "Taglı",
@@ -81,7 +81,7 @@ module.exports = class JailCommand extends SlashCommand {
                                 },
                                 {
                                     name: "Yetkili",
-                                    value: "staff"
+                                    value: "auth"
                                 }
                             ]
                         },
