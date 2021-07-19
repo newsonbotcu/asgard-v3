@@ -2,7 +2,7 @@ const Permissions = require("../../../MODELS/Datalake/permit");
 const Roles = require("../../../MODELS/Datalake/backup_role");
 const low = require('lowdb');
 const { closeall } = require("../../../HELPERS/functions");
-const MemberRoles = require('../../../MODELS/Datalake/member');
+const MemberRoles = require('../../../MODELS/Datalake/backup_member');
 const Discord = require('discord.js');
 class RoleUpdate {
     constructor(client) {
