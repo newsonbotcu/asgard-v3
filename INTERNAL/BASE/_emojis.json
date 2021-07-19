@@ -100,5 +100,13 @@
     "point_bonus": "<:point_bonus:865489370587594752>",
     "point_required": "<:point_required:865489371935145984>",
     "point_time": "<:point_time:865489373214801931>",
-    "point_done": ""
+    "point_done": "<:stat_done:865730844067758091>",
+    "tasks_active": "<:stat_done:865730844067758091>",
+    "tasks_done": "<:stat_mark:865730844353888296>",
+    "solbar": "<:solbar:865489224635777024>",
+    "solbar_dolu": "<a:solbar_dolu:865489224655175690>",
+    "sagbar": "<:sagbar:865489224215298089>",
+    "sagbar_dolu": "<a:sagbar_dolu:865489224371011585>",
+    "ortabar": "<:ortabar:865489224581120040>",
+    "ortabar_dolu": "<a:bar_dolu:865489224618868787>"
 }
