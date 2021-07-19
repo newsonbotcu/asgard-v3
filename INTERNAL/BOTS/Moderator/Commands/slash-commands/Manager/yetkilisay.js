@@ -5,7 +5,7 @@ const IDS = require('../../../../../BASE/personels.json');
 module.exports = class BanCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
-            name: 'yetkili',
+            name: 'yetkilisay',
             description: 'Yetkilileri Gösterir',
             options: [
                 {
