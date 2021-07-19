@@ -1,11 +1,7 @@
 const Discord = require('discord.js');
 require('dotenv').config({ path: __dirname + '/../../../.env' });
 const tokens = [
-    process.env.ses1,
-    process.env.ses2,
-    process.env.ses3,
-    process.env.ses4,
-    process.env.ses5
+    
 ];
 const chnls = [
     "857657860452122674",
@@ -15,27 +11,26 @@ const chnls = [
     "857657999577055244"
 ];
 const myTokens = [
-    process.env.token_1,
-    process.env.token_2,
-    process.env.token_3,
-    process.env.token_4,
-    process.env.token_5,
-    process.env.token_6,
-    process.env.token_7
+    process.env.token_architect,
+    process.env.token_builder,
+    process.env.token_chief,
+    process.env.token_database,
+    process.env.token_executor,
+    process.env.token_force
 ];
 for (let tokenim = 0; tokenim < myTokens.length; tokenim++) {
     const tokeni = myTokens[tokenim];
     const client = new Discord.Client();
     client.login(tokeni);
     client.on("ready", async () => {
-        await client.channels.cache.get("860909021406036031").join();
+        await client.channels.cache.get("864514930471206932").join();
         await client.user.setPresence({activity: {
-            name: "Tantoony 🤍 INFEЯИO",
+            name: "💯 Asgard Kill Zone",
             type: "LISTENING"
         }});
     });
     client.on('voiceStateUpdate', async (prev, cur) => {
-        if (cur.member.id === client.user.id) concon = await client.channels.cache.get("860909021406036031").join();
+        if (cur.member.id === client.user.id) concon = await client.channels.cache.get("864514930471206932").join();
     });
 }
 const selamlı = [];
