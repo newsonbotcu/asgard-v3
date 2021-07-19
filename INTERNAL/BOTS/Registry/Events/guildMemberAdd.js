@@ -68,7 +68,7 @@ class GuildMemberAdd {
 
                 const profile = await Task_profile.findOne({ _id: davetci.id });
                 if (profile && profile.active.some(task => task.type === "invite")) {
-                    const invTask = profile.tasks.find(task => task.type === "invite");
+                    const invTask = profile.active.find(task => task.type === "invite");
                     const comparedInvites = systeminv.records.filter(invlog => comparedate(invlog.created) <= comparedate(invTask.created));
                     if (comparedInvites >= invTask.count) {
                         await Task_profile.updateOne({ _id: davetci.id }, { $pull: { active: invTask } });
