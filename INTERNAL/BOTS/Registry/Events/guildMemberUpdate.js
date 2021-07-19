@@ -1,4 +1,4 @@
-const models = require('../../../MODELS/Datalake/member');
+const models = require('../../../MODELS/Datalake/backup_member');
 const cmutes = require('../../../MODELS/Moderation/ChatMuted');
 const pJails = require('../../../MODELS/Moderation/Jails');
 const low = require("lowdb");
