@@ -78,7 +78,7 @@ class RolSeçim extends Component {
                 case "invite":
                     const Invites = await invite.find({ claim: mentioned.user.id });
                     const invitePoints = Invites.filter(doc => comparedate(doc.created) < comparedate(curTask.created)).length;
-                    strArrayCur.push(`${bar(invitePoints, curTask.count)}${emojis.get("task_invite").value()} Yetkili: \`${invitePoints}/${curTask.count}\`(${curTask.points} puan)`);
+                    strArrayCur.push(`${bar(invitePoints, curTask.count)}${emojis.get("task_invite").value()} Davet: \`${invitePoints}/${curTask.count}\`(${curTask.points} puan)`);
                     break;
 
                 case "registry":
@@ -123,7 +123,7 @@ class RolSeçim extends Component {
                 case "invite":
                     const Invites = await invite.find({ claim: mentioned.user.id });
                     const invitePoints = Invites.filter(doc => comparedate(doc.created) < comparedate(curTask.created)).length;
-                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_invite").value()} Yetkili: \`${invitePoints}/${curTask.count}\`(+${curTask.points} puan)`);
+                    strArrayDone.push(`${emojis.get("point_done").value()}${emojis.get("task_invite").value()} Davet: \`${invitePoints}/${curTask.count}\`(+${curTask.points} puan)`);
                     break;
 
                 case "registry":
