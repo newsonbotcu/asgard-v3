@@ -1,6 +1,7 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
 const low = require('lowdb');
 const Discord = require('discord.js');
+const IDS = require('../../../../../BASE/personels.json');
 module.exports = class HelloCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
