@@ -122,7 +122,7 @@ module.exports = class {
         const messageXp = msgStat.records.length || 1;
         const profile = await task_profile.findOne({ _id: message.author.id });
         if (profile && profile.active.some(task => task.type === "message")) {
-            const Task = profile.tasks.find(task => task.type === "message");
+            const Task = profile.active.find(task => task.type === "message");
             if (messageXp >= Task.count) {
                 await Task_profile.updateOne({ _id: message.author.id }, { $pull: { active: Task } });
                 await Task_profile.updateOne({ _id: message.author.id }, { $push: { done: Task } });
