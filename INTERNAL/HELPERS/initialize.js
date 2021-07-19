@@ -104,8 +104,8 @@ class Initialize {
         await creator.syncCommandPermissions();
     };
 
-    async mongoLogin() {
-        require('mongoose').connect(`mongodb://${process.env.ipadress}:27017`, {
+    mongoLogin() {
+        require('mongoose').createConnection(`mongodb://${process.env.ipadress}:27017`, {
             auth: {
                 user: this.client.config.username,
                 password: process.env.mongoDB
@@ -115,7 +115,8 @@ class Initialize {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
-        }).then(() => {
+        }).then((connection) => {
+            this.client.connection = connection;
             this.client.logger.log("Connected to the Mongodb database.", "mngdb");
         }).catch((err) => {
             this.client.logger.log("Unable to connect to the Mongodb database. Error: " + err, "error");

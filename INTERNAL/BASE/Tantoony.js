@@ -8,10 +8,9 @@ class Tantoony extends Client {
         this.config = require('../HELPERS/config');
         this.logger = require("../HELPERS/logger");
         this.functions = require("../HELPERS/functions");
-
         this.adapters = file => new FileSync(`../../BASE/_${file}.json`);
-        this.models = file => new FileSync(`../../MODELS/_${file}.json`);
 
+        this.models = new Collection();
         this.commands = new Collection();
         this.aliases = new Collection();
         this.cmdCoodown = new Object();
@@ -156,6 +155,29 @@ class Tantoony extends Client {
             await command.shutdown(this);
         }
         delete require.cache[require.resolve(`../BOTS/Moderator/${commandPath}/${commandName}.js`)];
+        return false;
+    }
+    
+    loadModel(ModelPath, ModelName) {
+        try {
+            const props = require(`../MODELS/${ModelPath}/${ModelName}`);
+            this.logger.log(`Loading Model: ${ModelName}. 👌`, "load");
+            this.models.set(ModelName, props);
+            return false;
+        } catch (e) {
+            return `Unable to load button ${ModelName}: ${e}`;
+        }
+    }
+
+    async unloadModel(ModelPath, ModelName) {
+        let model;
+        if (this.models.has(ModelName)) {
+            model = this.models.get(ModelName);
+        }
+        if (!model) {
+            return `The Model \`${ModelName}\` doesn't seem to exist, nor is it an alias. Try again!`;
+        }
+        delete require.cache[require.resolve(`../MODELS/${ModelPath}/${ModelName}.js`)];
         return false;
     }
 }
