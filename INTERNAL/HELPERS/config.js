@@ -10,5 +10,5 @@ module.exports = {
         name: "💯 Asgard Kill Zone",
         type: "LISTENING"
     },
-    tag: '⁂'
+    tag: ['⁂']
 }
