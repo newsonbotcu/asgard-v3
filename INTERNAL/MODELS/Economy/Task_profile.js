@@ -5,5 +5,6 @@ module.exports = mongoose.model('task_profile', new mongoose.Schema({
     done: Array,
     active: Array,
     created: Date,
-    started: Date
+    started: Date,
+    excuses: Array,
 }, { _id: false }));

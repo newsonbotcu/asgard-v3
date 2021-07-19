@@ -2,9 +2,7 @@ const Component = require("../../../Base/Component");
 const Discord = require('discord.js');
 const low = require('lowdb');
 const Task_duties = require("../../../../../MODELS/Economy/Task_duty");
-const Task_current = require("../../../../../MODELS/Economy/Task_current");
-const Task_done = require("../../../../../MODELS/Economy/Task_done");
-const Task_profile = require("../../../../../MODELS/Economy/Task_profile");
+const task_profile = require("../../../../../MODELS/Economy/task_profile");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {
@@ -27,29 +25,24 @@ class RolSeçim extends Component {
         const emojis = await low(client.adapters('emojis'));
         const guild = client.guilds.cache.get(ctx.guildID);
         const mentioned = guild.members.cache.get(ctx.user.id);
-        const startRol = guild.roles.cache.get(roles.get("starter").value());
-        const hoistroller = guild.roles.cache
-            .filter(r => r.rawPosition > startRol.rawPosition + 2)
-            .filter(r => r.hoist)
-            .filter(r => r.id !== roles.get("booster").value())
-            .sort((a, b) => a.rawPosition - b.rawPosition).array().reverse();
-        const rawrol = mentioned.roles.cache.filter(r => r.hoist).sort((a, b) => a.rawPosition - b.rawPosition).array().reverse()[0];
-        const myRol = hoistroller.find(r => r.rawPosition === rawrol.rawPosition);
+        const myProfile = await task_profile.findOne({ _id: mentioned.user.id });
+
+        const myRol = guild.roles.cache.get(myProfile.role)
         let strArray = [];
+        const ggtask = myProfile.active.filter(task => !ctx.data.data.values.includes(task.type));
+        for (let index = 0; index < ggtask.length; index++) {
+            const gbtask = ggtask[index];
+            strArray.push(`Görev envanterinden sildim: \`${gbtask.type}\``);
+            await task_profile.updateOne({ _id: mentioned.user.id }, { $pull: { active: gbtask } });
+        }
         for (let index = 0; index < ctx.data.data.values.length; index++) {
             const ctxValue = ctx.data.data.values[index];
             const Duty = await Task_duties.findOne({ roleID: myRol.id, type: ctxValue });
-            const myProfile = await Task_profile.findOne({ _id: mentioned.user.id });
-            const myOldDuties = await Task_done.findOne({ _id: mentioned.user.id });
             if (!Duty) {
                 strArray.push(`Sahip olduğun rolde böyle bir görev yok: \`${ctxValue}\``);
             } else {
-                const myDuty = myProfile.active.find(task => task.type === ctxValue);
-                if (myProfile.done.some(task => task.type === ctxValue) || (myDuty && (myDuty.created < Date.now() - 15000))) {
+                if (myProfile.done.some(task => task.type === ctxValue)) {
                     strArray.push(`Zaten bu görevi edindin: \`${ctxValue}\``);
-                } else if (myProfile.active.some(task => task.type === ctxValue) && (myDuty.created > Date.now() - 15000)) {
-                    strArray.push(`Görev envanterinden sildim: \`${ctxValue}\``);
-                    await Task_profile.updateOne({ _id: mentioned.user.id }, { $pull: { active: myDuty } });
                 } else {
                     const yeniDuty = {
                         type: ctxValue,
@@ -59,7 +52,7 @@ class RolSeçim extends Component {
                         created: new Date()
                     }
                     strArray.push(`Görev envanterine eklendi: \`${ctxValue}\``);
-                    await Task_profile.updateOne({ _id: mentioned.user.id }, { $push: { active: yeniDuty } });
+                    await task_profile.updateOne({ _id: mentioned.user.id }, { $push: { active: yeniDuty } });
                 }
             }
         }
