@@ -10,6 +10,7 @@ const personel = require("../../../../../MODELS/Datalake/personel");
 const invite = require("../../../../../MODELS/Datalake/invite");
 const { checkHours, comparedate } = require("../../../../../HELPERS/functions");
 const Task_profile = require("../../../../../MODELS/Economy/Task_profile");
+const { stripIndent } = require("common-tags");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {
