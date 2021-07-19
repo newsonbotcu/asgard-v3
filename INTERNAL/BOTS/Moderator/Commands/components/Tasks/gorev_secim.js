@@ -1,8 +1,8 @@
 const Component = require("../../../Base/Component");
 const Discord = require('discord.js');
 const low = require('lowdb');
-const Task_duties = require("../../../../../MODELS/Economy/Task_duty");
 const task_profile = require("../../../../../MODELS/Economy/task_profile");
+const Task_roles = require("../../../../../MODELS/Economy/Task_roles");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {
@@ -37,7 +37,8 @@ class RolSeçim extends Component {
         }
         for (let index = 0; index < ctx.data.data.values.length; index++) {
             const ctxValue = ctx.data.data.values[index];
-            const Duty = await Task_duties.findOne({ roleID: myRol.id, type: ctxValue });
+            const RoleData = await Task_roles.findOne({ _id: myRol.id });
+            const Duty = RoleData.tasks.find(task => task.type === ctxValue);
             if (!Duty) {
                 strArray.push(`Sahip olduğun rolde böyle bir görev yok: \`${ctxValue}\``);
             } else {

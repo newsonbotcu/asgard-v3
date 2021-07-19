@@ -6,6 +6,7 @@ const { sayi, comparedate } = require('../../../../../HELPERS/functions');
 const IDS = require('../../../../../BASE/personels.json');
 const Task_current = require('../../../../../MODELS/Economy/Task_current');
 const Task_done = require('../../../../../MODELS/Economy/Task_done');
+const Task_profile = require('../../../../../MODELS/Economy/task_profile');
 
 module.exports = class RegistryCommand extends SlashCommand {
     constructor(creator) {
@@ -89,8 +90,8 @@ module.exports = class RegistryCommand extends SlashCommand {
         });
         const errEmbed2 = new Discord.MessageEmbed().setDescription(`Sanırım bu üye zaten kayıtlı!`);
         if (!mentioned.roles.cache.has(roles.get("welcome").value()) && (mentioned.roles.cache.size > 1)) return ctx.send({ embeds: [errEmbed2] });
-        if (utils.get("taglıalım").value() && !mentioned.user.username.includes(client.config.tag)) {
-            if (!mentioned.roles.cache.has(roles.get("th-vip").value()) && !mentioned.roles.cache.has(roles.get("th-booster").value())) {
+        if (utils.get("taglıAlım").value() && !mentioned.user.username.includes(client.config.tag)) {
+            if (!mentioned.roles.cache.has(roles.get("vip").value()) && !mentioned.roles.cache.has(roles.get("booster").value())) {
                 const eEmbed = new Discord.MessageEmbed()
                     .setColor("#2f3136")
                     .setDescription(`Üzgünüm, ama henüz taglı alımdayız. ${mentioned} kullanıcısında vip veya booster rolü olmadığı koşulda onu içeri alamam..`)
@@ -128,20 +129,18 @@ module.exports = class RegistryCommand extends SlashCommand {
             await data.save();
         }
         const registryDatas = await nameData.find({ executor: ctx.user.id });
-        const total = registryDatas.length || 0;
+        const total = registryDatas.length || 1;
         const myEmbed = new Discord.MessageEmbed().setDescription(`${mentioned} kişisinin kaydı <@${ctx.user.id}> tarafından gerçekleştirildi.\nBu kişinin kayıt sayısı: \`${total}\``);
         await ctx.send({
             embeds: [myEmbed]
         });
-        const TaskData = await Task_current.findOne({ _id: ctx.user.id });
-        if (TaskData) {
+        const TaskData = await Task_profile.findOne({ _id: ctx.user.id });
+        if (TaskData && TaskData.active.some(task => task.type === "registry")) {
             const regTask = TaskData.tasks.find(task => task.type === "registry");
-            if (regTask) {
-                const currentRegs = registryDatas.filter(data => comparedate(data.created) <= comparedate(regTask.created));
-                if (currentRegs.length >= regTask.count) {
-                    await Task_current.updateOne({ _id: ctx.user.id }, { $pull: { task: regTask } });
-                    await Task_done.updateOne({ _id: ctx.user.id }, { $push: { task: regTask } });
-                }
+            const currentRegs = registryDatas.filter(data => comparedate(data.created) <= comparedate(regTask.created));
+            if (currentRegs.length >= regTask.count) {
+                await Task_profile.updateOne({ _id: ctx.user.id }, { $pull: { active: regTask } });
+                await Task_profile.updateOne({ _id: ctx.user.id }, { $push: { done: regTask } });
             }
         }
     }

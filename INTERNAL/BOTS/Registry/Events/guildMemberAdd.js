@@ -5,10 +5,7 @@ const regData = require('../../../MODELS/Datalake/Registered');
 const low = require("lowdb");
 const { checkDays, rain, comparedate } = require('../../../HELPERS/functions');
 const { stripIndents } = require('common-tags');
-const Task_current = require('../../../MODELS/Economy/Task_current');
-const Task_done = require('../../../MODELS/Economy/Task_done');
-const Points_config = require('../../../MODELS/Economy/Points_config');
-const Points_profile = require('../../../MODELS/Economy/Points_profile');
+const Task_profile = require('../../../MODELS/Economy/task_profile');
 class GuildMemberAdd {
 
     constructor(client) {
@@ -68,34 +65,16 @@ class GuildMemberAdd {
                 const dosyam = await systeminv.get('records');
                 if (!dosyam.some(entry => entry.user === member.user.id)) await model.updateOne({ _id: davetci.id }, { $push: { records: obj } });
                 count = dosyam.length + 1 || 1;
-                const currentTasks = await Task_current.findOne({ _id: davetci.id });
-                if (currentTasks) {
-                    const invTask = currentTasks.tasks.find(task => task.type === "invite");
-                    const inviteData = await model.findOne({ _id: davetci.id });
-                    if (invTask) {
-                        const comparedInvites = inviteData.invites.filter(invlog => comparedate(invlog.created) <= comparedate(invTask.created));
-                        if (comparedInvites >= invTask.count) {
-                            await Task_current.updateOne({ _id: davetci.id }, { $pull: { tasks: invTask } });
-                            await Task_done.updateOne({ _id: davetci.id }, { $push: { tasks: invTask } });
-                        }
+
+                const profile = await Task_profile.findOne({ _id: davetci.id });
+                if (profile && profile.active.some(task => task.type === "invite")) {
+                    const invTask = profile.tasks.find(task => task.type === "invite");
+                    const comparedInvites = systeminv.records.filter(invlog => comparedate(invlog.created) <= comparedate(invTask.created));
+                    if (comparedInvites >= invTask.count) {
+                        await Task_profile.updateOne({ _id: davetci.id }, { $pull: { active: invTask } });
+                        await Task_profile.updateOne({ _id: davetci.id }, { $push: { done: invTask } });
                     }
                 }
-
-                const pointData = await Points_profile.findOne({ _id: davetci.id });
-                if (pointData) {
-                    const pointConfig = await Points_config.findOne({ _id: pointData.roleID });
-                    if (pointData && !pointData.points.filter(point => point.type === "invite").find(point => point.invited === member.user.id)) await Points_profile.updateOne({ _id: davetci.id }, {
-                        $push: {
-                            points: {
-                                type: "invite",
-                                points: pointConfig.invite,
-                                invited: member.user.id
-                            }
-                        }
-                    });
-                }
-
-
             }
         });
         let pointed = '✧';

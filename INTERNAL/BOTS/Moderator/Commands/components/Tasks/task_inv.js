@@ -1,8 +1,6 @@
 const Component = require("../../../Base/Component");
 const Discord = require('discord.js');
 const low = require('lowdb');
-const Task_current = require("../../../../../MODELS/Economy/Task_current");
-const Task_done = require("../../../../../MODELS/Economy/Task_done");
 const Task_roles = require("../../../../../MODELS/Economy/Task_roles");
 const membership = require("../../../../../MODELS/Datalake/membership");
 const stat_msg = require("../../../../../MODELS/StatUses/stat_msg");
@@ -11,6 +9,7 @@ const tagged = require("../../../../../MODELS/Datalake/tagged");
 const personel = require("../../../../../MODELS/Datalake/personel");
 const invite = require("../../../../../MODELS/Datalake/invite");
 const { checkHours, comparedate } = require("../../../../../HELPERS/functions");
+const Task_profile = require("../../../../../MODELS/Economy/task_profile");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {
@@ -33,6 +32,8 @@ class RolSeçim extends Component {
         const emojis = await low(client.adapters('emojis'));
         const guild = client.guilds.cache.get(ctx.guildID);
         const mentioned = guild.members.cache.get(ctx.user.id);
+        const profile = await Task_profile.findOne({ _id: mentioned.user.id });
+        const myRol = guild.roles.cache.get(profile.role);
         const startRol = guild.roles.cache.get(roles.get("starter").value());
         const hoistroller = guild.roles.cache
             .filter(r => r.rawPosition > startRol.rawPosition + 2)
@@ -40,10 +41,9 @@ class RolSeçim extends Component {
             .filter(r => r.id !== roles.get("booster").value())
             .sort((a, b) => a.rawPosition - b.rawPosition).array().reverse();
         const rawrol = mentioned.roles.cache.filter(r => r.hoist).sort((a, b) => a.rawPosition - b.rawPosition).array().reverse()[0];
-        const nextRol = hoistrollerr.reverse().find(r => r.rawPosition > rawrol.rawPosition);
-        const myRol = hoistroller.find(r => r.rawPosition === rawrol.rawPosition);
-        const Duties = await Task_current.findOne({ _id: mentioned.user.id });
-        const myOldDuties = await Task_done.findOne({ _id: mentioned.user.id });
+        const nextRol = hoistroller.reverse().find(r => r.rawPosition > rawrol.rawPosition);
+        const Duties = profile.active;
+        const myOldDuties = profile.done;
         const myData = await personel.find({ _id: mentioned.user.id });
         const RoleData = await Task_roles.findOne({ _id: myData.role });
 
