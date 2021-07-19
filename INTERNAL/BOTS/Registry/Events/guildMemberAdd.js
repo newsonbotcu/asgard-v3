@@ -125,7 +125,7 @@ class GuildMemberAdd {
         💯 ASGARD KILL ZONE
         ${emojis.get("pando1").value()} Asgard'a hoş geldin ${member}, artık ${rain(client, member.guild.memberCount)} kişiyiz!
         Hesabın ${rain(client, checkDays(member.user.createdAt))} gün önce oluşturulmuştur.
-        ${emojis.get("pando2").value()} Seni buraya getiren kişi: ${davetçi ? (davetçi.username || "Özel URL") : "Özel URL"}
+        ${emojis.get("pando2").value()} Seni buraya getiren kişi: ${davetci ? (davetci.username || "Özel URL") : "Özel URL"}
         \`[Davet Sayısı: ${count ? count : 0}]\`
         ${emojis.get("pando2").value()} **Bifrost** isimli kanallardan birine girip kayıt olabilirsin.
         `);
