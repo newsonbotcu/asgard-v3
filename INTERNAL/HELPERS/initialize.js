@@ -104,7 +104,7 @@ class Initialize {
         await creator.syncCommandPermissions();
     };
 
-    mongoLogin() {
+    async mongoLogin() {
         require('mongoose').createConnection(`mongodb://${process.env.ipadress}:27017`, {
             auth: {
                 user: this.client.config.username,
