@@ -2,6 +2,7 @@ const { SlashCommand, CommandOptionType } = require('slash-create');
 const low = require('lowdb');
 const Discord = require('discord.js');
 const afkdata = require('../../../../../MODELS/Datalake/afk');
+const IDS = require('../../../../../BASE/personels.json');
 module.exports = class AFKCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {

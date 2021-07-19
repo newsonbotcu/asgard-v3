@@ -6,7 +6,7 @@ const StatData = require('../../../../../MODELS/StatUses/stat_voice');
 const InviteData = require('../../../../../MODELS/StatUses/stat_invite');
 const RegData = require('../../../../../MODELS/Datalake/membership');
 const { stripIndent } = require('common-tags');
-const stringTable = require('string-table');
+const IDS = require('../../../../../BASE/personels.json');
 module.exports = class HelloCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {

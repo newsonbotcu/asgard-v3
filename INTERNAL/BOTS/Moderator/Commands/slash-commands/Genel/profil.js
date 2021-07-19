@@ -3,7 +3,7 @@ const low = require('lowdb');
 const Discord = require('discord.js');
 const { stripIndent } = require('common-tags');
 const { rain, checkDays } = require('../../../../../HELPERS/functions');
-const Profile = require('../../../../../MODELS/Economy/Profile');
+const Profile = require('../../../../../MODELS/Economy/profile');
 const IDS = require('../../../../../BASE/personels.json');
 module.exports = class AvatarCommand extends SlashCommand {
     constructor(creator) {
