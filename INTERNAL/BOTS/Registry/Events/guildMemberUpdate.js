@@ -1,6 +1,6 @@
 const models = require('../../../MODELS/Datalake/backup_member');
-const cmutes = require('../../../MODELS/Moderation/ChatMuted');
-const pJails = require('../../../MODELS/Moderation/Jails');
+const cmutes = require('../../../MODELS/Moderation/mod_cmute');
+const pJails = require('../../../MODELS/Moderation/mod_jail');
 const low = require("lowdb");
 class GuildMemberUpdate {
     constructor(client) {
