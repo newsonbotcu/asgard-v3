@@ -99,7 +99,7 @@ module.exports = class HelloCommand extends SlashCommand {
         **Sorumlu:**  ${guild.members.cache.get(ecrin.executor) || "Bilinmiyor"}
         **Zaman:** \`${checkDays(ecrin.created)} gün önce\`
         **Süre:** \`${ecrin.duration}\`
-        `).setTitle("Pasific EMNIYET");
+        `).setTitle("Asgard EMNIYET");
         await ctx.send({
             embeds: [ecrinim]
         });
