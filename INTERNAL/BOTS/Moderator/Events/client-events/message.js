@@ -131,7 +131,7 @@ module.exports = class {
                     const pointData = await Points_profile.findOne({ _id: myTagData.executor });
                     if (pointData) {
                         const pointConfig = await Points_config.findOne({ _id: pointData.roleID });
-                        if (pointData && !pointData.points.filter(point => point.type === "tagged").find(point => point.target === message.author.id)) await Points_profile.updateOne({ _id: myTagData.executor }, {
+                        if (pointData && !pointData.points.filter(point => point.type === "tagged").find(point => point<target === message.author.id)) await Points_profile.updateOne({ _id: myTagData.executor }, {
                             $push: {
                                 points: {
                                     type: "tagged",
