@@ -4,6 +4,7 @@ const afkdata = require('../../../../MODELS/Datalake/afk');
 const Tagli = require('../../../../MODELS/Datalake/tagged');
 const { comparedate, checkMins, checkHours } = require('../../../../HELPERS/functions');
 const stat_msg = require('../../../../MODELS/StatUses/stat_msg');
+const task_profile = require('../../../../MODELS/Economy/Task_profile');
 module.exports = class {
     constructor(client) {
         this.client = client;
@@ -117,6 +118,15 @@ module.exports = class {
                     }
                 }
             });
+        }
+        const messageXp = msgStat.records.length || 1;
+        const profile = await task_profile.findOne({ _id: message.author.id });
+        if (profile && profile.active.some(task => task.type === "message")) {
+            const Task = profile.tasks.find(task => task.type === "message");
+            if (messageXp >= Task.count) {
+                await Task_profile.updateOne({ _id: message.author.id }, { $pull: { active: Task } });
+                await Task_profile.updateOne({ _id: message.author.id }, { $push: { done: Task } });
+            }
         }
         if (message.content === 'onay') {
             const tagData = await Tagli.find({ target: message.author.id });
