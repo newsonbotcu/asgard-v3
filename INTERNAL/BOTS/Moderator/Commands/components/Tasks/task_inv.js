@@ -10,6 +10,7 @@ const personel = require("../../../../../MODELS/Datalake/personel");
 const invite = require("../../../../../MODELS/Datalake/invite");
 const { checkHours, comparedate } = require("../../../../../HELPERS/functions");
 const Task_profile = require("../../../../../MODELS/Economy/Task_profile");
+const task_profile = require("../../../../../MODELS/Economy/Task_profile");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {
@@ -44,7 +45,7 @@ class RolSeçim extends Component {
         const nextRol = hoistroller.reverse().find(r => r.rawPosition > rawrol.rawPosition);
         const Duties = profile.active;
         const myOldDuties = profile.done;
-        const myData = await personel.find({ _id: mentioned.user.id });
+        const myData = await task_profile.find({ _id: mentioned.user.id });
         const RoleData = await Task_roles.findOne({ _id: myData.role });
 
         if (!RoleData) return await ctx.send(`Sahip olduğun bir yetki bulunamadı!`, {
