@@ -105,7 +105,7 @@ class Initialize {
     };
 
     async mongoLogin() {
-        require('mongoose').createConnection(`mongodb://${process.env.ipadress}:27017`, {
+        await require('mongoose').connect(`mongodb://${process.env.ipadress}:27017`, {
             auth: {
                 user: this.client.config.username,
                 password: process.env.mongoDB
