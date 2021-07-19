@@ -73,7 +73,7 @@ module.exports = class JailCommand extends SlashCommand {
                                 },
                                 {
                                     name: "Mesaj",
-                                    value: "messagexp"
+                                    value: "message"
                                 },
                                 {
                                     name: "Taglı",

@@ -51,7 +51,7 @@ class RolSeçim extends Component {
         Puan: ${Duties.find(duty => duty.type === "voicexp").points}
         \n‏‏‎ ‎
         `: "Yok", true)
-            .addField(`${emojis.get("task_messagexp").value()} Chat Aktifliği`, Duties.some(duty => duty.type === "messagexp") ? stripIndent`
+            .addField(`${emojis.get("task_messagexp").value()} Chat Aktifliği`, Duties.some(duty => duty.type === "message") ? stripIndent`
         Mesaj: ${Duties.find(duty => duty.type === "messagexp").count}
         Puan: ${Duties.find(duty => duty.type === "messagexp").points}
         \n‏‏‎ ‎
