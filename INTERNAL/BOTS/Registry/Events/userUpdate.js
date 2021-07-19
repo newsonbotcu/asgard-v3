@@ -1,8 +1,8 @@
-const pjails = require('../../../MODELS/Moderation/Jails');
+const pjails = require('../../../MODELS/Moderation/mod_jail');
 const Discord = require('discord.js');
-const Tagli = require('../../../MODELS/Datalake/Tagli');
+const Tagli = require('../../../MODELS/Datalake/tagged');
 const low = require('lowdb');
-const gangs = require('../../../MODELS/Datalake/gangs');
+const gangs = require('../../../MODELS/Datalake/gang');
 class UserUpdate {
     constructor(client) {
         this.client = client;
