@@ -115,8 +115,7 @@ class Initialize {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
-        }).then((connection) => {
-            this.client.connection = connection;
+        }).then(() => {
             this.client.logger.log("Connected to the Mongodb database.", "mngdb");
         }).catch((err) => {
             this.client.logger.log("Unable to connect to the Mongodb database. Error: " + err, "error");
