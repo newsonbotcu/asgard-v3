@@ -1,7 +1,7 @@
 const Component = require("../../../Base/Component");
 const Discord = require('discord.js');
 const low = require('lowdb');
-const Task_profile = require("../../../../../MODELS/Economy/task_profile");
+const Task_profile = require("../../../../../MODELS/Economy/Task_profile");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {

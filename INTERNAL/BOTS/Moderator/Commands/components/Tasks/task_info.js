@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const low = require('lowdb');
 const { stripIndent } = require("common-tags");
 const Task_roles = require("../../../../../MODELS/Economy/Task_roles");
-const Task_profile = require("../../../../../MODELS/Economy/task_profile");
+const Task_profile = require("../../../../../MODELS/Economy/Task_profile");
 class RolSeçim extends Component {
     constructor(client) {
         super(client, {

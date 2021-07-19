@@ -5,7 +5,7 @@ const regData = require('../../../MODELS/Datalake/membership');
 const low = require("lowdb");
 const { checkDays, rain, comparedate } = require('../../../HELPERS/functions');
 const { stripIndents } = require('common-tags');
-const Task_profile = require('../../../MODELS/Economy/task_profile');
+const Task_profile = require('../../../MODELS/Economy/Task_profile');
 class GuildMemberAdd {
 
     constructor(client) {
