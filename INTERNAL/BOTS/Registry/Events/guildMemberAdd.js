@@ -1,7 +1,7 @@
-const model = require('../../../MODELS/StatUses/Invites');
-const cmutes = require('../../../MODELS/Moderation/ChatMuted');
-const Jails = require('../../../MODELS/Moderation/Jails');
-const regData = require('../../../MODELS/Datalake/Registered');
+const model = require('../../../MODELS/StatUses/stat_invite');
+const cmutes = require('../../../MODELS/Moderation/mod_cmute');
+const Jails = require('../../../MODELS/Moderation/mod_jail');
+const regData = require('../../../MODELS/Datalake/membership');
 const low = require("lowdb");
 const { checkDays, rain, comparedate } = require('../../../HELPERS/functions');
 const { stripIndents } = require('common-tags');
