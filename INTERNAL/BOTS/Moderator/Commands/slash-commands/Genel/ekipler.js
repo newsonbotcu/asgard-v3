@@ -22,11 +22,6 @@ module.exports = class RegistryCommand extends SlashCommand {
                     },
                     {
                         type: ApplicationCommandPermissionType.ROLE,
-                        id: IDS.all,
-                        permission: true
-                    },
-                    {
-                        type: ApplicationCommandPermissionType.ROLE,
                         id: IDS.owner,
                         permission: true
                     },

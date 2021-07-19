@@ -56,16 +56,6 @@ module.exports = class MuteCommand extends SlashCommand {
                     },
                     {
                         type: ApplicationCommandPermissionType.ROLE,
-                        id: IDS.all,
-                        permission: true
-                    },
-                    {
-                        type: ApplicationCommandPermissionType.ROLE,
-                        id: IDS.ceo,
-                        permission: true
-                    },
-                    {
-                        type: ApplicationCommandPermissionType.ROLE,
                         id: IDS.owner,
                         permission: true
                     },

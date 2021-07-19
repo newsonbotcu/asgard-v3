@@ -11,6 +11,7 @@ module.exports = class AvatarCommand extends SlashCommand {
             name: 'tag',
             description: 'Sunucunun tagını gösterir',
             deferEphemeral: false,
+            guildIDs: [IDS.guild],
             throttling: {
                 duration: 10,
                 usages: 1

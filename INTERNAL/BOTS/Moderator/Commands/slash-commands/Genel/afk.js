@@ -15,6 +15,7 @@ module.exports = class AFKCommand extends SlashCommand {
                     required: true
                 }
             ],
+            guildIDs: [IDS.guild],
             deferEphemeral: false,
             throttling: {
                 duration: 60,

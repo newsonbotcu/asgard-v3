@@ -44,6 +44,7 @@ module.exports = class HelloCommand extends SlashCommand {
                     description: 'Hangi kullanıcının statına bakacaksın?'
                 }
             ],
+            guildIDs: [IDS.guild],
             deferEphemeral: false,
             throttling: {
                 duration: 60,

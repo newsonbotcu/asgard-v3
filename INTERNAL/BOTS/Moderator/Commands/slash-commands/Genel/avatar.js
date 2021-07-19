@@ -14,6 +14,7 @@ module.exports = class HelloCommand extends SlashCommand {
                     required: false
                 }
             ],
+            guildIDs: [IDS.guild],
             deferEphemeral: false
         });
 

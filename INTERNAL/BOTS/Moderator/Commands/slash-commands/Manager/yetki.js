@@ -38,12 +38,7 @@ module.exports = class BanCommand extends SlashCommand {
                 [IDS.guild]: [
                     {
                         type: ApplicationCommandPermissionType.ROLE,
-                        id: IDS.all,
-                        permission: true
-                    },
-                    {
-                        type: ApplicationCommandPermissionType.ROLE,
-                        id: IDS.ceo,
+                        id: IDS.manager,
                         permission: true
                     },
                     {

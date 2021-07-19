@@ -18,6 +18,7 @@ module.exports = class AvatarCommand extends SlashCommand {
                     required: false
                 }
             ],
+            guildIDs: [IDS.guild],
             deferEphemeral: false,
             throttling: {
                 duration: 10,
