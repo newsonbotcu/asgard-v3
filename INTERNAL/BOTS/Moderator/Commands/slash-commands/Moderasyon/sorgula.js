@@ -13,7 +13,7 @@ module.exports = class HelloCommand extends SlashCommand {
             options: [
                 {
                     type: CommandOptionType.INTEGER,
-                    name: 'kullanıcı id',
+                    name: 'kullanıcı-id',
                     description: "Kullanıcının ID'sini belirtiniz",
                     required: true
                 },
