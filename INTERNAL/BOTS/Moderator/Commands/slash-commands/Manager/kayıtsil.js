@@ -6,8 +6,8 @@ const membership = require('../../../../../MODELS/Datalake/membership');
 module.exports = class BanCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
-            name: 'permver',
-            description: 'Kişiye perm verir',
+            name: 'kayıtsil',
+            description: 'Kişinin kaydını siler',
             options: [
                 {
                     type: CommandOptionType.USER,
