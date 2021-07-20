@@ -75,7 +75,7 @@ class VoiceStateUpdate {
                 const privDatas = await private_channels.find({ type: type });
                 if (oldData) return await cur.member.voice.setChannel(oldData._id);
                 const nueva = await gaming.clone({
-                    name: (type === "private" ? "Bigard" : "Game Room") + miniNum(privDatas.length),
+                    name: (type === "private" ? "Bigard" : "Game Room") + miniNum(privDatas.length.toString()),
                     userLimit: 1,
                     permissionOverwrites: [
                         {
