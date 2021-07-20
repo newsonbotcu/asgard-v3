@@ -5,7 +5,7 @@ const client = new Tantoony({
 require('dotenv').config({ path: __dirname + '/../../../.env' });
 client.login(process.env.cd2);
 client.handler.mongoLogin();
-const Members = require("../../MODELS/Datalake/MemberRoles");
+const Members = require("../../MODELS/Datalake//backup_member");
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)) };
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
