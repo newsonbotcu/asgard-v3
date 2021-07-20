@@ -76,7 +76,7 @@ class RolSeçim extends Component {
                             }
                         }
                     });
-                    collector_2.stop();
+                    collector_2.stop("finished");
                     await channel.send("Mazeretin başarıyla oluşturuldu!");
                     setTimeout(async () => {
                         await channel.delete();
@@ -87,10 +87,17 @@ class RolSeçim extends Component {
                     Süre: ${message.content} gün
                     `));
                 });
+                collector_2.on("end", async (coll, rea) => {
+                    if (rea !== "finished") {
+                        await channel.send("Bu işlem zaman aşımına uğradı!");
+                        setTimeout(async () => {
+                            await channel.delete();
+                        }, 5000);
+                        return;
+                    }
+                });
             }
         });
-
-
 
     }
 }
