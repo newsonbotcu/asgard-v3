@@ -108,7 +108,7 @@ module.exports = class RegistryCommand extends SlashCommand {
         const nameFixed = name.split(' ').map(i => i[0].toUpperCase() + i.slice(1).toLowerCase()).join(' ');
         await mentioned.roles.add(roles.get(sex).value().concat(roles.get("member").value()));
         await mentioned.roles.remove(roles.get("welcome").value());
-        let point = '⸸';
+        let point = '✧';
         if (client.config.tag.some(tag => mentioned.user.username.includes(tag))) {
             await mentioned.roles.add(roles.get("crew").value());
             point = client.config.tag[0];
