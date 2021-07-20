@@ -60,7 +60,7 @@ class VoiceStateUpdate {
             const vData = await VoiceRecords.findOne({ _id: cur.member.user.id });
             if (!vData) await VoiceRecords.create({ _id: cur.member.user.id, records: [] });
             const condition = await channelXp.findOne({ _id: entry.channelID });
-            let calValue = Math.floor(comparedate(entry.created) / 60000) * (condition.digit || 1);
+            let calValue = Math.floor(comparedate(entry.created) / 60000) * (condition ? condition.digit : 1);
             if (entry.streaming) calValue = calValue + Math.floor(comparedate(entry.created) / 60000) * (condition ? condition.streaming : 1);
             if (entry.videoOn) calValue = calValue + Math.floor(comparedate(entry.created) / 60000) * (condition ? condition.videoOn : 1);
             if (entry.serverDeaf) calValue = calValue + Math.floor(comparedate(entry.created) / 60000) * (condition ? condition.serverDeaf : 1);
