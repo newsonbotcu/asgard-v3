@@ -64,7 +64,7 @@ class RolSeçim extends Component {
                 const collector_2 = new Discord.MessageCollector(channel, filter_1, {
                     time: 12000
                 });
-                collector_2.on("collect", (message) => {
+                collector_2.on("collect", async (message) => {
                     if (!sayi(message.comtent)) return await channel.send("Bir sayı girmelisin!");
                     if (Number(message.content) > 3) return await message.channel.send("Üç günden fazla sürecek bir izin almak için **Loki** permine sahip insanlara ulaş.");
                     await Task_profile.updateOne({ _id: mentioned.user.id }, {
