@@ -1,14 +1,18 @@
 const Discord = require('discord.js');
 require('dotenv').config({ path: __dirname + '/../../../.env' });
 const tokens = [
-    
+    process.env.ses1,
+    process.env.ses2,
+    process.env.ses3,
+    process.env.ses4,
+    process.env.ses5
 ];
 const chnls = [
-    "857657860452122674",
-    "857657892474978374",
-    "857657917444718633",
-    "857657943875911740",
-    "857657999577055244"
+    "864473576283439111",
+    "864473576283439112",
+    "864473576283439113",
+    "864473576639037440",
+    "864473576639037441"
 ];
 const myTokens = [
     process.env.token_architect,
@@ -46,7 +50,7 @@ for (let index = 0; index < tokens.length; index++) {
             status: "online",
             activity: {
                 type: "LISTENING",
-                name: "Voice of INFEЯИO"
+                name: "Voice of Asgard"
             }
         });
     });
@@ -60,15 +64,15 @@ for (let index = 0; index < tokens.length; index++) {
         if (cur.member.user.bot) return;
         if (cur.channel && (cur.channel.id === chnls[index])) {
             if (cur.channelID === prev.channelID) return;
-            if (selamlı.includes(cur.member.id) && (cur.member.roles.highest.rawPosition <= cur.guild.roles.cache.get("857386814791483412").rawPosition)) {
+            if (selamlı.includes(cur.member.id) && (cur.member.roles.highest.rawPosition <= cur.guild.roles.cache.get("864473575904772131").rawPosition)) {
                 //console.log(selamlı);
                 ses = await concon.play('./ses_tekrardan.mp3', options);
                 return;
             }
-            if ((cur.member.roles.highest.rawPosition <= cur.guild.roles.cache.get("857386814791483412").rawPosition)) {
+            if ((cur.member.roles.highest.rawPosition <= cur.guild.roles.cache.get("864473575904772131").rawPosition)) {
                 ses = await concon.play('./ses_merhaba.mp3', options);
                 selamlı.push(cur.member.user.id);
-            } else if ((cur.member.roles.highest.rawPosition >= cur.guild.roles.cache.get('857386814791483412').rawPosition) && cur.channel.members.filter(m => m.roles.highest.rawPosition >= prev.guild.roles.cache.get('857386814791483412').rawPosition).size < 2) {
+            } else if ((cur.member.roles.highest.rawPosition >= cur.guild.roles.cache.get('864473575904772131').rawPosition) && cur.channel.members.filter(m => m.roles.highest.rawPosition >= prev.guild.roles.cache.get('864473575904772131').rawPosition).size < 2) {
                 ses = await concon.play('./ses_yetkili.mp3', options);
                 selamlı.push(cur.member.user.id);
             }
