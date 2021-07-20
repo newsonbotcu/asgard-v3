@@ -26,7 +26,7 @@ class RolSeçim extends Component {
         const emojis = await low(client.adapters('emojis'));
         const guild = client.guilds.cache.get(ctx.guildID);
         const mentioned = guild.members.cache.get(ctx.user.id);
-        const profile = Task_profile.findOne({ _id: mentioned.user.id });
+        const profile = await Task_profile.findOne({ _id: mentioned.user.id });
         const myRol = guild.roles.cache.get(profile.role);
         const RoleData = await Task_roles.findOne({ _id: myRol.id });
         const Duties = await RoleData.tasks;
