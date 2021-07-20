@@ -56,9 +56,10 @@ module.exports = class {
             uCooldown = client.cmdCoodown[ctx.user.id];
         }
         let time = uCooldown[cmd.info.name] || 0;
-        if (time && (time > Date.now())) return await ctx.send(`Komutu tekrar kullanabilmek için lütfen **${Math.ceil((time - Date.now()) / 1000)}** saniye bekle!`, {
+        if (time && (time > Date.now() - cmd.info.cooldown)) return await ctx.send(`Komutu tekrar kullanabilmek için lütfen **${Math.ceil((time - Date.now()) / 1000)}** saniye bekle!`, {
             ephemeral: true 
         });
+        client.cmdCoodown[ctx.user.id][cmd.info.name] = Date.now();
 
         client.logger.log(`[(${ctx.user.id})] ${ctx.user.username} ran BUTTON [${cmd.info.name}]`, "cmd");
         try {
