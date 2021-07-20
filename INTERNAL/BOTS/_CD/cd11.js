@@ -11,14 +11,8 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const settings = require('../../HELPERS/config');
 client.on('ready', async () => {
-    await client.user.setPresence({
-        status: "idle",
-        activity: {
-            name: "Saving the Hell",
-            type: "PLAYING"
-        }
-    });
     const utiller = low(new FileSync('./../../BASE/_utils.json')).value();
+    await client.user.setPresence(utiller.cdPresence);
     const guild = client.guilds.cache.get(settings.server);
     const sayı = Math.floor(guild.memberCount / utiller.CdSize);
     const array = guild.members.cache.array().slice((sayı * 10), (sayı * 11));

@@ -28,7 +28,11 @@
   "taglıAlım": true,
   "ohal": false,
   "dir": "asgard-v3",
-  "perms": {
-    "853669620124483605": "1610611408"
-  }
+  "cdPresence": {
+    "status": "idle",
+    "activity": {
+        "name": "Saving the Gods",
+        "type": "PLAYING"
+    }
+}
 }
