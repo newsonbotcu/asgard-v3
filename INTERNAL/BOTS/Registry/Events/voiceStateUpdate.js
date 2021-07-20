@@ -52,29 +52,26 @@ class VoiceStateUpdate {
             }
         }
         if (cur && cur.channel) {
-            const myChannelData = privChannels.find(c => c.owner === prev.member.user.id);
-            if (myChannelData) {
-                const myChannel = prev.guild.channels.cache.get(myChannelData._id);
-                if ((cur.member.user.id === myChannelData.owner) && (cur.channel.id === myChannelData._id)) {
-                    clearTimeout(leaves.get(myChannel.id));
-                    leaves.delete(myChannel.id);
-                }
+            let type;
+            let creatorChannel;
+            switch (cur.channel.id) {
+                case channels.get("gaming").value():
+                    type = "gaming";
+                    creatorChannel = gaming;
+                    break;
+                case channels.get("oda_olustur").value():
+                    type = "private";
+                    creatorChannel = channel;
+                    break;
+                default:
+                    break;
+            }
+            const myChannelData = privChannels.find(c => c.owner === cur.member.user.id && c.type === type);
+            if (myChannelData && (cur.channel.id === myChannelData._id)) {
+                clearTimeout(leaves.get(myChannelData._id));
+                leaves.delete(myChannelData._id);
             }
             if ((cur.channel.id === channel.id) || (cur.channel.id === gaming.id)) {
-                let type;
-                let creatorChannel;
-                switch (cur.channel.id) {
-                    case channels.get("gaming").value():
-                        type = "gaming";
-                        creatorChannel = gaming;
-                        break;
-                    case channels.get("oda_olustur").value():
-                        type = "private";
-                        creatorChannel = channel;
-                        break;
-                    default:
-                        break;
-                }
                 const oldData = await private_channels.findOne({ owner: cur.member.user.id, type: type });
                 const privDatas = await private_channels.find({ type: type });
                 if (oldData) return await cur.member.voice.setChannel(oldData._id);
