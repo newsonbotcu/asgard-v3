@@ -74,7 +74,7 @@ module.exports = {
         return basamakbir;
     },
     miniNum(sayi) {
-            sayi = sayi.replace(/([0-9])/g, d => {
+            sayi = sayi.toString().replace(/([0-9])/g, d => {
                 return {
                     "0": "⁰",
                     "1": "¹",
