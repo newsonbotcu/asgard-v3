@@ -34,8 +34,8 @@ class VoiceStateUpdate {
                 const myChannel = prev.guild.channels.cache.get(myChannelData._id);
                 if (prev.channel && (prev.channel.members.size === 0)) {
                     const deleteTimeout = setTimeout(async () => {
-                        await prev.channel.delete();
                         await private_channels.deleteOne({ _id: prev.channel.id });
+                        await prev.channel.delete();
                         leaves.delete(myChannel.id);
                     }, 60000);
                     leaves.set(myChannel.id, deleteTimeout);
