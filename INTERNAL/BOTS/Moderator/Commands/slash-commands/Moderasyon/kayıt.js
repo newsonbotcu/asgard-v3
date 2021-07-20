@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const nameData = require('../../../../../MODELS/Datalake/membership');
 const { sayi, comparedate } = require('../../../../../HELPERS/functions');
 const IDS = require('../../../../../BASE/personels.json');
-const Task_profile = require('../../../../../MODELS/Economy/task_profile');
+const Task_profile = require('../../../../../MODELS/Economy/Task_profile');
 
 module.exports = class RegistryCommand extends SlashCommand {
     constructor(creator) {
