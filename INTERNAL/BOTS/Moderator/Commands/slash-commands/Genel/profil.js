@@ -49,7 +49,7 @@ module.exports = class AvatarCommand extends SlashCommand {
         \`Ayırıcı Rolü:\` ${mentioned.roles.cache.array().filter(r => r.hoist).sort((a, b) => b.rawPosition - a.rawPosition)[0]}
         \`Durumu:\` ${mentioned.user.presence.activities.find(a => a.type === "CUSTOM_STATUS") ? mentioned.user.presence.activities.find(a => a.type === "CUSTOM_STATUS").state : "Bulunamadı"}
         \`Xp:\` ${myProfile ? myProfile.xp : 0}
-        `).setThumbnail(mentioned.user.displayAvatarURL()).setColor(mentioned.displayHexColor).setTitle("† Dante's INFEЯИO");
+        `).setThumbnail(mentioned.user.displayAvatarURL()).setColor(mentioned.displayHexColor).setTitle("Asgard Kill Zone");
         await ctx.send({
             embeds: [embedd]
         });
