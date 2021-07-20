@@ -1,7 +1,7 @@
 const Component = require("../../../Base/Component");
 const Discord = require('discord.js');
 const low = require('lowdb');
-const private_channels = require("../../../../../MODELS/Temprorary/private_channels");
+const private_channels = require("../../../../../MODELS/Base/private_channels");
 
 class RolSeçim extends Component {
     constructor(client) {

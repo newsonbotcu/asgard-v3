@@ -61,12 +61,15 @@ class VoiceStateUpdate {
             }
             if ((cur.channel.id === channel.id) || (cur.channel.id === gaming.id)) {
                 let type;
+                let creatorChannel;
                 switch (cur.channel.id) {
                     case channels.get("gaming").value():
                         type = "gaming";
+                        creatorChannel = gaming;
                         break;
                     case channels.get("oda_olustur").value():
                         type = "private";
+                        creatorChannel = channel;
                         break;
                     default:
                         break;
@@ -74,7 +77,7 @@ class VoiceStateUpdate {
                 const oldData = await private_channels.findOne({ owner: cur.member.user.id, type: type });
                 const privDatas = await private_channels.find({ type: type });
                 if (oldData) return await cur.member.voice.setChannel(oldData._id);
-                const nueva = await gaming.clone({
+                const nueva = await creatorChannel.clone({
                     name: (type === "private" ? "Bigard" : "Game Room") + miniNum(privDatas.length.toString()),
                     userLimit: 1,
                     permissionOverwrites: [
