@@ -28,6 +28,15 @@ class VoiceStateUpdate {
                 default:
                     break;
             }
+            if (prev.channel && (prev.channel.members.size === 0)) {
+                const deleteTimeout = setTimeout(async () => {
+                    await prev.channel.delete();
+                    await private_channels.deleteOne({ _id: prev.channel.id });
+                    leaves.delete(myChannel.id);
+                }, 60000);
+                leaves.set(myChannel.id, deleteTimeout);
+                return;
+            }
             const myChannelData = privChannels.find(c => (c.owner === prev.member.user.id) && (c.type === tyype));
             if (myChannelData) {
                 const myChannel = prev.guild.channels.cache.get(myChannelData._id);
@@ -38,11 +47,6 @@ class VoiceStateUpdate {
                     }, 600000);
                     leaves.set(myChannel.id, myTimeout);
                 }
-            }
-            if (prev.channel && (prev.channel.members.size === 0)) {
-                await prev.channel.delete();
-                await private_channels.deleteOne({ _id: prev.channel.id });
-                return;
             }
         }
         if (cur && cur.channel) {
