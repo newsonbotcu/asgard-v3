@@ -1,4 +1,5 @@
 const low = require('lowdb');
+const { miniNum } = require('../../../HELPERS/functions');
 const private_channels = require('../../../MODELS/Base/private_channels');
 
 class VoiceStateUpdate {
@@ -60,7 +61,7 @@ class VoiceStateUpdate {
             }
             if ((cur.channel.id === channel.id) || (cur.channel.id === gaming.id)) {
                 let type;
-                switch (prev.channel.id) {
+                switch (cur.channel.id) {
                     case channels.get("gaming").value():
                         type = "gaming";
                         break;
@@ -71,9 +72,10 @@ class VoiceStateUpdate {
                         break;
                 }
                 const oldData = await private_channels.findOne({ owner: cur.member.user.id, type: type });
+                const privDatas = await private_channels.find({ type: type });
                 if (oldData) return await cur.member.voice.setChannel(oldData._id);
                 const nueva = await gaming.clone({
-                    name: cur.member.displayName,
+                    name: (type === "private" ? "Bigard" : "Game Room") + miniNum(privDatas.length),
                     userLimit: 1,
                     permissionOverwrites: [
                         {
