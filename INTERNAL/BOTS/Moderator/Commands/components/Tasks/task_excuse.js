@@ -30,7 +30,7 @@ class RolSeçim extends Component {
         const excuseCount = profiles.map(p => p.excuses.length).reduce((a, c) => a + c, 0);
         const mazeretlog = guild.channels.cache.get(channels.get("excuse").value());
         const myProfile = await Task_profile.findOne({ _id: mentioned.user.id });
-        if (myProfile.excuses.filter(ex => checkDays(ex.created) < 15).length > 1) return await ctx.send(`İzin sınırını aştın!`, {
+        if (myProfile.excuses.filter(ex => checkDays(ex.created) < 15).length >= 1) return await ctx.send(`İzin sınırını aştın!`, {
             ephemeral: true
         });
         const channel = await guild.channels.create(`mazeret-${excuseCount + 1}`, {
