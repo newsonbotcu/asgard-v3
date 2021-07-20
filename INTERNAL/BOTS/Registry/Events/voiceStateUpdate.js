@@ -19,7 +19,7 @@ class VoiceStateUpdate {
         const gaming = client.guild.channels.cache.get(channels.get("game_lobby").value());
         if (prev.channel && privChannels.some(c => c._id === prev.channel.id)) {
             let tyype;
-            switch (prev.channel.id) {
+            switch (prev.channel.parentID) {
                 case channels.get("gaming").value():
                     tyype = "gaming";
                     break;
