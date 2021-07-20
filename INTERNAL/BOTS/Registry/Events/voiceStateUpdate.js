@@ -9,6 +9,7 @@ class VoiceStateUpdate {
     async run(prev, cur) {
         const client = this.client;
         const leaves = client.leaves;
+        const deleteChnl = client.deleteChnl;
         const utils = await low(client.adapters('utils'));
         const roles = await low(client.adapters('roles'));
         const emojis = await low(client.adapters('emojis'));
@@ -32,16 +33,16 @@ class VoiceStateUpdate {
             const myChannelData = privChannels.find(c => (c.owner === prev.member.user.id) && (c.type === tyype));
             if (myChannelData) {
                 const myChannel = prev.guild.channels.cache.get(myChannelData._id);
-                if (prev.channel && (prev.channel.members.size === 0)) {
+                if (prev.channel.members.size === 0) {
                     const deleteTimeout = setTimeout(async () => {
                         await private_channels.deleteOne({ _id: prev.channel.id });
                         await prev.channel.delete();
-                        leaves.delete(myChannel.id);
+                        deleteChnl.delete(myChannel.id);
                     }, 60000);
-                    leaves.set(myChannel.id, deleteTimeout);
+                    deleteChnl.set(myChannel.id, deleteTimeout);
                     return;
                 }
-                if (prev.channel && (prev.member.user.id === myChannelData.owner) && (prev.channel.id === myChannelData._id)) {
+                if ((prev.member.user.id === myChannelData.owner) && (prev.channel.id === myChannelData._id)) {
                     const myTimeout = setTimeout(async () => {
                         await myChannel.setUserLimit(myChannel.members.size);
                         leaves.delete(myChannel.id);
@@ -54,7 +55,7 @@ class VoiceStateUpdate {
             const myChannelData = privChannels.find(c => c.owner === prev.member.user.id);
             if (myChannelData) {
                 const myChannel = prev.guild.channels.cache.get(myChannelData._id);
-                if (cur.channel && (cur.member.user.id === myChannelData.owner) && (cur.channel.id === myChannelData._id)) {
+                if ((cur.member.user.id === myChannelData.owner) && (cur.channel.id === myChannelData._id)) {
                     clearTimeout(leaves.get(myChannel.id));
                     leaves.delete(myChannel.id);
                 }

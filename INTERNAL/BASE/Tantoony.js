@@ -17,6 +17,7 @@ class Tantoony extends Client {
         this.buttons = new Collection();
 
         this.leaves = new Map();
+        this.deleteChnl = new Map();
         this.invites = new Object();
         this.spamwait = new Map();
         this.spamcounts = new Object();
