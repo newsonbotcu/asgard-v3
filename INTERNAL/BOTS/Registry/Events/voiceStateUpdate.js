@@ -88,9 +88,9 @@ class VoiceStateUpdate {
 
                         break;
                     case channels.get("oda_olustur").value():
-                        const oldData = await private_channels.findOne({ owner: cur.member.user.id, type: "private" });
-                        if (oldData) return await cur.member.voice.setChannel(oldData._id);
-                        const nueva = await channel.clone({
+                        const oldDataa = await private_channels.findOne({ owner: cur.member.user.id, type: "private" });
+                        if (oldDataa) return await cur.member.voice.setChannel(oldDataa._id);
+                        const nuevaa = await channel.clone({
                             name: cur.member.displayName,
                             userLimit: 1,
                             permissionOverwrites: [
@@ -111,7 +111,7 @@ class VoiceStateUpdate {
                                 }
                             ]
                         });
-                        await private_channels.create({ _id: nueva.id, type: "private", owner: cur.member.user.id });
+                        await private_channels.create({ _id: nuevaa.id, type: "private", owner: cur.member.user.id });
                         break;
 
                     default:
