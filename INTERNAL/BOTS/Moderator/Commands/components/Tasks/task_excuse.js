@@ -71,7 +71,7 @@ class RolSeçim extends Component {
                         $push: {
                             excuses: {
                                 created: new Date(),
-                                duration: message.content,
+                                duration: Number(message.content),
                                 reason: reeson
                             }
                         }
