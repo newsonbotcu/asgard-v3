@@ -35,7 +35,7 @@ class RolSeçim extends Component {
             embeds: [noDutyEmbed],
             ephemeral: true
         });
-        const embed = new Discord.MessageEmbed().setDescription(`${myRol} rolü için görevler aşağıda belirtilmiştir`).setTitle("ASGARD KİLL ZONE")
+        const embed = new Discord.MessageEmbed().setDescription(`${myRol} rolü için görevler aşağıda belirtilmiştir`).setTitle("ASGARD KILL ZONE")
             .addField(`${emojis.get("task_registry").value()} Kayıt Görevi`, Duties.some(duty => duty.type === "registry") ? stripIndent`
         Kayıt: ${Duties.find(duty => duty.type === "registry").count}
         Puan: ${Duties.find(duty => duty.type === "registry").points}
