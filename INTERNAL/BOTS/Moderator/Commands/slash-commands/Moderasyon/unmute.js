@@ -69,9 +69,8 @@ module.exports = class MuteCommand extends SlashCommand {
         const emojis = await low(client.adapters('emojis'));
         const userID = Object.values(ctx.options)[0];
         const mentioned = client.guilds.cache.get(ctx.guildID).members.cache.get(userID);
-        const errEmbed = new Discord.MessageEmbed().setDescription(`${emojis.get("kullaniciyok").value()} Kullanıcı bulunamadı!`).setColor('#2f3136');
-        if (!mentioned) return await ctx.send({
-            embeds: [errEmbed]
+        if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
+            ephemeral: true
         });
         const guild = client.guilds.cache.get(ctx.guildID);
         switch (Object.values(ctx.options)[1]) {

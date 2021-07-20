@@ -82,9 +82,8 @@ module.exports = class RegistryCommand extends SlashCommand {
         const emojis = await low(client.adapters('emojis'));
         const userID = Object.values(ctx.options)[0];
         const mentioned = client.guilds.cache.get(ctx.guildID).members.cache.get(userID);
-        const errEmbed = new Discord.MessageEmbed().setDescription(`${emojis.get("kullaniciyok").value()} Kullanıcı bulunamadı!`).setColor('#2f3136')
-        if (!mentioned) return await ctx.send({
-            embeds: [errEmbed]
+        if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
+            ephemeral: true
         });
         const errEmbed2 = new Discord.MessageEmbed().setDescription(`Sanırım bu üye zaten kayıtlı!`);
         if (!mentioned.roles.cache.has(roles.get("welcome").value()) && (mentioned.roles.cache.size > 1)) return ctx.send({ embeds: [errEmbed2] });

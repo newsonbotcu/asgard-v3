@@ -87,9 +87,8 @@ module.exports = class BanCommand extends SlashCommand {
         const guild = client.guilds.cache.get(ctx.guildID);
         const userID = Object.values(ctx.options)[0];
         const mentioned = guild.members.cache.get(userID);
-        const errEmbed = new Discord.MessageEmbed().setDescription(`${emojis.get("kullaniciyok").value()} Kullanıcı bulunamadı!`).setColor('#2f3136');
-        if (!mentioned) return await ctx.send({
-            embeds: [errEmbed]
+        if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
+            ephemeral: true
         });
         const roleID = roles.get(ctx.options["rol"]).value();
         await mentioned.roles.add(roleID);

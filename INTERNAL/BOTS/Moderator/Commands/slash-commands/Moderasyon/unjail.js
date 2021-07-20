@@ -53,9 +53,8 @@ module.exports = class JailCommand extends SlashCommand {
     const userID = Object.values(ctx.options)[0];
     const mentioned = client.guilds.cache.get(ctx.guildID).members.cache.get(userID);
     const guild = client.guilds.cache.get(ctx.guildID);
-    const errEmbed = new Discord.MessageEmbed().setDescription(`Kullanıcı bulunamadı!`).setColor('#2f3136');
-    if (!mentioned) return await ctx.send({
-      embeds: [errEmbed]
+    if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
+        ephemeral: true
     });
     const Data = await Jails.findOne({ _id: mentioned.user.id });
     const embedd = new Discord.MessageEmbed().setDescription(`Kayt Bulunamadı!`)

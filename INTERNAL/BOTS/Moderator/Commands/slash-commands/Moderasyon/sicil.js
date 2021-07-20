@@ -68,9 +68,8 @@ module.exports = class HelloCommand extends SlashCommand {
         const userID = Object.values(ctx.options)[0];
         const guild = client.guilds.cache.get(ctx.guildID);
         const mentioned = client.guilds.cache.get(ctx.guildID).members.cache.get(userID);
-        const errEmbed = new Discord.MessageEmbed().setDescription(`${emojis.get("kullaniciyok").value()} Kullanıcı bulunamadı!`).setColor('#2f3136')
-        if (!mentioned) return await ctx.send({
-            embeds: [errEmbed]
+        if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
+            ephemeral: true
         });
         const DefaultEmbed = new Discord.MessageEmbed().setColor('#2f3136').setDescription(`\`\`\`md\n${embeddoc}\`\`\``).setTitle('SİCİL KONTROL');
         const doc = await sicil.findOne({ _id: mentioned.user.id });

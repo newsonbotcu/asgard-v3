@@ -2,17 +2,17 @@ const { SlashCommand, CommandOptionType, ApplicationCommandPermissionType } = re
 const low = require('lowdb');
 const Discord = require('discord.js');
 const IDS = require('../../../../../BASE/personels.json');
-const task_profile = require('../../../../../MODELS/Economy/Task_profile');
+const membership = require('../../../../../MODELS/Datalake/membership');
 module.exports = class BanCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
-            name: 'yetkiver',
-            description: 'Kişiye yetki verir',
+            name: 'permver',
+            description: 'Kişiye perm verir',
             options: [
                 {
                     type: CommandOptionType.USER,
                     name: 'kullanıcı',
-                    description: 'Kullanıcıyı belirtiniz.',
+                    description: 'Kullanıcıyı belirtiniz',
                     required: true
                 }
             ],
@@ -40,7 +40,7 @@ module.exports = class BanCommand extends SlashCommand {
             },
             throttling: {
                 duration: 60000,
-                usages: 6
+                usages: 4
             }
         });
 
@@ -56,25 +56,16 @@ module.exports = class BanCommand extends SlashCommand {
         const guild = client.guilds.cache.get(ctx.guildID);
         const userID = Object.values(ctx.options)[0];
         const mentioned = guild.members.cache.get(userID);
-        const exeMember = guild.members.cache.get(ctx.user.id);
         if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
             ephemeral: true
         });
-        const profile = await task_profile.findOne({ _id: mentioned.user.id });
-        if (profile) return await ctx.send(`Bu üye zaten yetkili!`, {
+        if (guild.members.cache.get(ctx.member.user.id).roles.highest.rawPosition <= mentioned.roles.highest.rawPosition) return await ctx.send(`Bunu yapmak için yeterli yetkiye sahip değilsin`, {
             ephemeral: true
         });
-        const role = guild.roles.cache.get(roles.get("starter").value());
-        await mentioned.roles.add(role.id);
-        await task_profile.create({
-            _id: mentioned.user.id,
-            role: role.id,
-            done: [],
-            active: [],
-            created: new Date(),
-            started: new Date(),
-            excuses: []
-        });
-        await ctx.send(`Profil başarıyla oluşturuldu.`);
+        const data = await membership.findOne({ _id: mentioned.user.id });
+        if (data) await membership.deleteOne({ _id: mentioned.user.id });
+        await mentioned.roles.remove(mentioned.roles.cache.array().map(r => r.id).filter(r => r !== roles.get("booster").value()));
+        await mentioned.roles.add(roles.get("welcome").value());
+        await ctx.send(`${mentioned} kullanıcısı başarıyla kayıtsıza atıldı!`);
     }
 }

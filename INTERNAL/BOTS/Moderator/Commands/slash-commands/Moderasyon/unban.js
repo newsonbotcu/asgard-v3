@@ -12,8 +12,8 @@ module.exports = class JailCommand extends SlashCommand {
       options: [
         {
           type: CommandOptionType.STRING,
-          name: 'kullanıcı',
-          description: 'Kullanıcıyı belirtiniz',
+          name: 'kullanıcı-id',
+          description: "Kullanıcının ID'sini belirtiniz",
           required: true
         }
       ],
@@ -57,12 +57,14 @@ module.exports = class JailCommand extends SlashCommand {
     const BanDoc = await Bans.findOne({ _id: mentioned.user.id });
     const emptyError = new Discord.MessageEmbed().setDescription(`${emojis.get("missingPerms").value()} Bu kullanıcının banını kaldıracak yetkiye sahip değilsin!`)
     if (BanDoc && guild.members.cache.get(BanDoc.executor).roles.highest.rawPosition > guild.members.cache.get(ctx.user.id).roles.highest.rawPosition) return await ctx.send({
-      embeds: [emptyError]
+      embeds: [emptyError],
+      ephemeral: true
     });
     if (BanDoc) await Bans.deleteOne({ _id: mentioned.user.id });
     await guild.members.unban(mentioned.user.id, `${ctx.user.username} tarafından kaldırıldı`);
     if (!mentioned) return await ctx.send({
-      embeds: [errEmbed]
+      embeds: [errEmbed],
+      ephemeral: true
     });
     const responseEmbed = new Discord.MessageEmbed().setDescription(`<@${mentioned.user.id}> kullanıcısının banı başarıyla kaldırıldı!`);
     await ctx.send({
