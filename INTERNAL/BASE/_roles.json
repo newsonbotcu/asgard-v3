@@ -30,5 +30,42 @@
   "Female": [
     "864473575854571533"
   ],
-  "owner": "853669620124483605"
+  "owner": "853669620124483605",
+
+  "burc_boga": "",
+  "burc_ikizler": "",
+  "burc_yengec": "",
+  "burc_aslan": "",
+  "burc_basak": "",
+  "burc_terazi": "",
+  "burc_koc": "",
+  "burc_akrep": "",
+  "burc_yay": "",
+  "burc_oglak": "",
+  "burc_kova": "",
+  "burc_balik": "",
+
+  "oyun_lol": "",
+  "oyun_valo": "",
+  "oyun_csgo": "",
+  "oyun_mc": "",
+  "oyun_gta": "",
+  "oyun_mobile": "",
+  "oyun_zula": "",
+  "oyun_al": "",
+  "oyun_pubg": "",
+  "oyun_cod": "",
+  "oyun_au": "",
+
+  "etkinlik_vk": "",
+  "etkinlik_kk": "",
+  "etkinlik_sc": "",
+
+  "katılımcı_konser": "",
+  "katılımcı_etkinlik": "",
+  "katılımcı_çekiliş": "",
+
+  "iliski_var": "",
+  "iliski_yok": "",
+  "iliski_istemiyorum": ""
 }
