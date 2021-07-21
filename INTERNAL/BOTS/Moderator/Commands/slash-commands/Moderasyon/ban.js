@@ -70,17 +70,14 @@ module.exports = class BanCommand extends SlashCommand {
         if (!mentioned) return await ctx.send(`Kullanıcı bulunamadı`, {
             ephemeral: true
         });
-        const errEmbed2 = new Discord.MessageEmbed().setColor('#2f3136').setDescription(`${emojis.eachRight("soru").value()} Bir sebep girmelisin`);
-        if (!Object.values(ctx.options)[1]) return await ctx.send({
-            embeds: [errEmbed2]
+        if (!Object.values(ctx.options)[1]) return await ctx.send(`Bir sebep girmelisin`, {
+            ephemeral: true
         });
-        const mPerms = new Discord.MessageEmbed().setColor('#2f3136').setDescription(`${emojis.get("missingPerms").value()} Bunu yapmak için yeterli yetkiye sahip değilsin`);
-        if (guild.members.cache.get(ctx.user.id).roles.highest.rawPosition <= mentioned.roles.highest.rawPosition) return await ctx.send({
-            embeds: [mPerms]
+        if (guild.members.cache.get(ctx.user.id).roles.highest.rawPosition <= mentioned.roles.highest.rawPosition) return await ctx.send(`${emojis.get("missingPerms").value()} Bunu yapmak için yeterli yetkiye sahip değilsin`, {
+            ephemeral: true
         });
-        const bPerms = new Discord.MessageEmbed().setColor('#2f3136').setDescription(`${emojis.get("miisingBotPerms").value()} Bu kişiyi banlamak için yeterli yetkiye sahip değilim`)
-        if (!mentioned.bannable) return message.channel.send({
-            embeds: [bPerms]
+        if (!mentioned.bannable) return await ctx.send(`Bu kişiyi banlamak için yeterli yetkiye sahip değilim`, {
+            ephemeral: true
         });
         let typo = "Temp";
         let duration = Object.values(ctx.options)[2];

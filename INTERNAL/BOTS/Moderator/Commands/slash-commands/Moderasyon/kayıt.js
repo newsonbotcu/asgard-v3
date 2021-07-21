@@ -100,9 +100,8 @@ module.exports = class RegistryCommand extends SlashCommand {
         const sex = ctx.options["cinsiyet"];
         const name = ctx.options["isim"];
         const age = ctx.options["yaş"];
-        const ageEmbed = new Discord.MessageEmbed().setDescription(`Geçerli bir yaş girmelisin!`)
-        if (!sayi(age)) return ctx.send({
-            embeds: [ageEmbed]
+        if (!sayi(age)) return ctx.send(`Geçerli bir yaş girmelisin!`, {
+            ephemeral: true
         });
         const nameFixed = name.split(' ').map(i => i[0].toUpperCase() + i.slice(1).toLowerCase()).join(' ');
         await mentioned.roles.add(roles.get(sex).value().concat(roles.get("member").value()));

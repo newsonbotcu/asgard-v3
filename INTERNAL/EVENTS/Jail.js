@@ -14,7 +14,7 @@ class JailEvent {
         const channels = await low(client.adapters('channels'));
         const memberRoles = member.roles.cache.filter(r => r.id !== roles.get("booster").value()).filter(r => r.editable).array();
         await member.roles.remove(memberRoles);
-        await member.roles.add(roles.get("prisoner").value());
+        await member.roles.add([roles.get("prisoner").value(), roles.get("denied").value()]);
         let deletedRoles = await memberRoles.map(r => r.name);
         const Jail = await Jails.findOne({ _id: member.user.id });
         if (!Jail) {
