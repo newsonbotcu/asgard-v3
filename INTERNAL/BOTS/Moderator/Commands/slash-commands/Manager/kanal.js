@@ -6,7 +6,7 @@ module.exports = class BanCommand extends SlashCommand {
   constructor(creator) {
     super(creator, {
       name: 'kanal',
-      description: 'Kanal taşıma/çekme komutu',
+      description: 'Kanal taşıma/çekme/susturma komutu',
       options: [
         {
           type: CommandOptionType.STRING,
@@ -25,10 +25,6 @@ module.exports = class BanCommand extends SlashCommand {
             {
               name: "Çek",
               value: "cek"
-            },
-            {
-              name: "kilit",
-              value: "kilit"
             }
           ]
         },
@@ -75,15 +71,70 @@ module.exports = class BanCommand extends SlashCommand {
     const guild = client.guilds.cache.get(ctx.guildID);
     const userID = Object.values(ctx.options)[0];
     const mentioned = guild.members.cache.get(userID);
-    const errEmbed = new Discord.MessageEmbed().setDescription(`${emojis.get("kullaniciyok").value()} Kullanıcı bulunamadı!`).setColor('#2f3136');
-    if (!mentioned) return await ctx.send({
-      embeds: [errEmbed]
+    if (!mentioned) return await ctx.send(`${emojis.get("kullaniciyok").value()} Kullanıcı bulunamadı!`, {
+      ephemeral: true
     });
-    const roleID = roles.get(ctx.options["rol"]).value();
-    await mentioned.roles.add(roleID);
-    const responseEmbed = new Discord.MessageEmbed().setDescription(`${mentioned} kullanıcısına <@&${roleID}> başarıyla verildi!`);
-    await ctx.send({
-      embeds: [responseEmbed]
+    const channel = guild.channels.cache.get(ctx.options["kanal"]);
+    if (!channel) return await ctx.send(`Kanal bulunamadı!`, {
+      ephemeral: true
     });
+    switch (ctx.options["işlem"]) {
+      case "tasi":
+        if (channel.type !== "voice") return await ctx.send(`Belirttiğin kanal bir ses kanalı olmalı!`, {
+          ephemeral: true
+        });
+        if (!mentioned.voice.channel) return await ctx.send(`Bir ses kanalında bulunmalısın!`, {
+          ephemeral: true
+        });
+        await mentioned.voice.channel.members.forEach(async mem => {
+          await mem.voice.setChannel(channel.id);
+        });
+        break;
+      case "sustur":
+        if (channel.type === "voice") {
+          if (!mentioned.voice.channel) return await ctx.send(`Bir ses kanalında bulunmalısın!`, {
+            ephemeral: true
+          });
+          if (channel.permissionOverwrites.get(guild.roles.everyone.id).deny.toArray().includes("SPEAK")) {
+            await channel.updateOverwrite(guild.roles.everyone.id, {
+              SPEAK: null
+            });
+          } else {
+            await channel.updateOverwrite(guild.roles.everyone.id, {
+              SPEAK: false
+            });
+          }
+          await channel.members.forEach(async m => {
+            await m.voice.setChannel(channel.id);
+          });
+        } else {
+          if (channel.permissionOverwrites.get(guild.roles.everyone.id).deny.toArray().includes("SEND_MESSAGES")) {
+            await channel.updateOverwrite(guild.roles.everyone.id, {
+              SEND_MESSAGES: null
+            });
+          } else {
+            await channel.updateOverwrite(guild.roles.everyone.id, {
+              SEND_MESSAGES: false
+            });
+            await channel.updateOverwrite(IDS.owner, {
+              SEND_MESSAGES: true
+            });
+          }
+        }
+        break;
+      case "cek":
+        if (channel.type !== "voice") return await ctx.send(`Belirttiğin kanal bir ses kanalı olmalı!`, {
+          ephemeral: true
+        });
+        if (!mentioned.voice.channel) return await ctx.send(`Bir ses kanalında bulunmalısın!`, {
+          ephemeral: true
+        });
+        await channel.members.forEach(async mem => {
+          await mem.voice.setChannel(mentioned.voice.channel.id);
+        });
+        break;
+      default:
+        break;
+    }
   }
 }
