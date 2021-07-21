@@ -29,8 +29,8 @@
   "cdPresence": {
     "status": "idle",
     "activity": {
-        "name": "Saving the Gods",
-        "type": "PLAYING"
+      "name": "Saving the Gods",
+      "type": "PLAYING"
     }
-}
+  }
 }
