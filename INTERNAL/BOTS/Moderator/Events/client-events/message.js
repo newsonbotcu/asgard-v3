@@ -40,16 +40,6 @@ module.exports = class {
             this.client.spamcounts[message.author.id][message.content] = count + 1;
         }
         this.client.spamwait[message.author.id][message.content] = Date.now() + 3000;
-        if (message.member.roles.cache.has(roles.get("welcome").value()) && (message.content === "393") && ((message.channel.id === channels.get("welcome").value()) || (message.channel.id === channels.get("otb").value()))) {
-            message.delete();
-            await message.member.roles.remove(message.member.roles.cache.filter(r => r.id !== roles.get("booster").value()).array());
-            await message.member.roles.add(roles.get("otb").value());
-        }
-        if (message.member.roles.cache.has(roles.get("welcome").value()) && (message.content === "393") && ((message.channel.id === channels.get("welcome").value()) || (message.channel.id === channels.get("otb").value()))) {
-            message.delete();
-            await message.member.roles.remove(message.member.roles.cache.filter(r => r.id !== roles.get("booster").value()).array());
-            await message.member.roles.add(roles.get("otbmisafir").value());
-        }
         let system = await afkdata.findOne({ _id: message.member.user.id });
         if (system) {
             message.channel.send(new Discord.MessageEmbed().setDescription(`Seni tekrardan görmek ne güzel ${message.member}!\n${system.inbox.length > 0 ? `${system.inbox.length} yeni mesajın var!\n●▬▬▬▬▬▬▬▬▬●\n${system.inbox.map(content => `[${message.guild.members.cache.get(content.userID) || "Bilinmiyor"}]: ${content.content} [🔗](${content.url})`).join('\n')}` : "Hiç yeni mesajın yok!"}`));
