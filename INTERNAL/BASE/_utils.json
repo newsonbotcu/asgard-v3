@@ -27,7 +27,7 @@
   "ohal": false,
   "dir": "asgard-v3",
   "cdPresence": {
-    "status": "idle",
+    "status": "online",
     "activity": {
       "name": "Saving the Gods",
       "type": "PLAYING"
