@@ -122,11 +122,11 @@ class GuildMemberAdd {
         }
         await member.roles.add(roles.get("welcome").value());
         member.guild.channels.cache.get(channels.get("welcome").value()).send(stripIndents`
-        ${emojis.get("pando1").value()} Asgard'a hoş geldin ${member}, artık ${rain(client, member.guild.memberCount)} kişiyiz!
-        Hesabın ${rain(client, checkDays(member.user.createdAt))} gün önce oluşturulmuştur.
-        ${emojis.get("pando2").value()} Seni buraya getiren kişi: ${davetci ? (davetci.username || "Özel URL") : "Özel URL"}
+        ・ Asgard'a hoş geldin ${member}, artık ${rain(client, member.guild.memberCount)} kişiyiz!
+        ・ Hesabın ${rain(client, checkDays(member.user.createdAt))} gün önce oluşturulmuştur.
+        ・ Seni buraya getiren kişi: ${davetci ? (davetci.username || "Özel URL") : "Özel URL"}
         \`[Davet Sayısı: ${count ? count : 0}]\`
-        ${emojis.get("pando2").value()} **Bifrost** isimli kanallardan birine girip kayıt olabilirsin.
+        ・ **Bifrost** isimli kanallardan birine girip kayıt olabilirsin.
         `);
         client.extention.emit('Logger', 'Registry', member.user.id, 'MEMBER_ADD', 'Yeni üye');
     }
