@@ -55,6 +55,19 @@ module.exports = class JailCommand extends SlashCommand {
                 },
                 {
                     type: CommandOptionType.SUB_COMMAND,
+                    name: 'git',
+                    description: 'git komutları',
+                    options: [
+                        {
+                            type: CommandOptionType.STRING,
+                            name: "komut",
+                            description: "komutu belirtiniz",
+                            required: true,
+                        }
+                    ]
+                },
+                {
+                    type: CommandOptionType.SUB_COMMAND,
                     name: 'calm-down',
                     description: 'Rol dağıtma botları',
                     options: [
@@ -187,6 +200,19 @@ module.exports = class JailCommand extends SlashCommand {
             case "pm2":
                 if (Object.values(ctx.options['pm2'])[0].startsWith('logs')) return;
                 const ls = children.exec(`pm2 ${Object.values(ctx.options['pm2'])[0]}`);
+                ls.stdout.on('data', function (data) {
+                    ctx.send(`\`\`\`${data.slice(0, 1990)}...\`\`\``);
+                });
+                ls.stderr.on('data', function (data) {
+                    ctx.send(`\`\`\`${data.slice(0, 1990)}...\`\`\``);
+                });
+                setTimeout(() => {
+                    ls.kill();
+                }, 100);
+                break;
+
+            case "git":
+                const ls = children.exec(`git ${Object.values(ctx.options['git'])[0]}`);
                 ls.stdout.on('data', function (data) {
                     ctx.send(`\`\`\`${data.slice(0, 1990)}...\`\`\``);
                 });
