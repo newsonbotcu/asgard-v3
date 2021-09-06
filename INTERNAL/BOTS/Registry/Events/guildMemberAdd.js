@@ -126,6 +126,7 @@ class GuildMemberAdd {
         > Senin ile birlikte ${rain(client, member.guild.memberCount)} kişi olduk!
         > Topraklarımıza görünüşe göre **${davetci ? (davetci.username || "Özel URL") : "Özel URL"}** sayesinde geldin.
         > **Bifrost** isimli kanallardan birine girip kayıt olabilirsin.
+        > Asgard ordusuna katılmak istiyorsan tagımızı \`⁂\` alabilirsin.
         `);
         client.extention.emit('Logger', 'Registry', member.user.id, 'MEMBER_ADD', 'Yeni üye');
     }
