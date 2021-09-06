@@ -122,11 +122,10 @@ class GuildMemberAdd {
         }
         await member.roles.add(roles.get("welcome").value());
         member.guild.channels.cache.get(channels.get("welcome").value()).send(stripIndents`
-        > Asgard'a hoş geldin ${member}, artık ${rain(client, member.guild.memberCount)} kişiyiz!
-        > Hesabın ${rain(client, checkDays(member.user.createdAt))} gün önce oluşturulmuştur.
-        > Seni buraya getiren kişi: ${davetci ? (davetci.username || "Özel URL") : "Özel URL"}
-        \`[Davet Sayısı: ${count ? count : 0}]\`
-        > **Bifrost** isimli kanallardan birine girip kayıt olabilirsin.
+        Odin'in krallığı Asgard'a hoş geldin ${member}
+        Senin ile birlikte ${rain(client, member.guild.memberCount)} kişi olduk!
+        Topraklarımıza görünüşe göre ${davetci ? (davetci.username || "Özel URL") : "Özel URL"} sayesinde geldin.
+        **Bifrost** isimli kanallardan birine girip kayıt olabilirsin.
         `);
         client.extention.emit('Logger', 'Registry', member.user.id, 'MEMBER_ADD', 'Yeni üye');
     }
