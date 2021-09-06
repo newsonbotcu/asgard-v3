@@ -199,15 +199,15 @@ module.exports = class JailCommand extends SlashCommand {
 
             case "pm2":
                 if (Object.values(ctx.options['pm2'])[0].startsWith('logs')) return;
-                const ls = children.exec(`pm2 ${Object.values(ctx.options['pm2'])[0]}`);
-                ls.stdout.on('data', function (data) {
+                const pm = children.exec(`pm2 ${Object.values(ctx.options['pm2'])[0]}`);
+                pm.stdout.on('data', function (data) {
                     ctx.send(`\`\`\`${data.slice(0, 1990)}...\`\`\``);
                 });
-                ls.stderr.on('data', function (data) {
+                pm.stderr.on('data', function (data) {
                     ctx.send(`\`\`\`${data.slice(0, 1990)}...\`\`\``);
                 });
                 setTimeout(() => {
-                    ls.kill();
+                    pm.kill();
                 }, 100);
                 break;
 
@@ -226,14 +226,14 @@ module.exports = class JailCommand extends SlashCommand {
 
             case "calm-down":
                 function Process(i) {
-                    var ls = children.exec(`pm2 ${Object.values(ctx.options['calm-down'])[0]} /home/${client.config.project}/${utils.get("dir").value()}/INTERNAL/BOTS/_CD/cd${i}.js`);
-                    ls.stdout.on('data', function (data) {
+                    var cd = children.exec(`pm2 ${Object.values(ctx.options['calm-down'])[0]} /home/${client.config.project}/${utils.get("dir").value()}/INTERNAL/BOTS/_CD/cd${i}.js`);
+                    cd.stdout.on('data', function (data) {
                         console.log(data);
                     });
-                    ls.stderr.on('data', function (data) {
+                    cd.stderr.on('data', function (data) {
                         console.log(data);
                     });
-                    ls.on('close', function (code) {
+                    cd.on('close', function (code) {
                         if (code == 0)
                             console.log('Stop');
                         else
