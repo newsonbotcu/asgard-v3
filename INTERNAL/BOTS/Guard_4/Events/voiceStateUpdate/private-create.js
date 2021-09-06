@@ -1,6 +1,6 @@
 const low = require('lowdb');
-const { miniNum } = require('../../../HELPERS/functions');
-const private_channels = require('../../../MODELS/Base/private_channels');
+const { miniNum } = require('../../../../HELPERS/functions');
+const private_channels = require('../../../../MODELS/Base/private_channels');
 
 class VoiceStateUpdate {
     constructor(client) {
@@ -97,7 +97,6 @@ class VoiceStateUpdate {
                     ]
                 });
                 await private_channels.create({ _id: nueva.id, type: type, owner: cur.member.user.id });
-
                 await cur.member.voice.setChannel(nueva.id);
             }
         }
