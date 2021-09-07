@@ -77,7 +77,7 @@ class GuildMemberAdd {
                 }
             }
         });
-        let pointed = '✧';
+        let pointed = '∗';
         if (member.user.username.includes(client.config.tag)) {
             pointed = client.config.tag;
             await member.roles.add(roles.get("crew").value());
