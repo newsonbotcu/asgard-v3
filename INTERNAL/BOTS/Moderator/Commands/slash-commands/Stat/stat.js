@@ -69,7 +69,7 @@ module.exports = class HelloCommand extends SlashCommand {
         const type = Object.values(ctx.options)[0];
         const guild = client.guilds.cache.get(ctx.guildID);
 
-        
+
         function bar(point, maxPoint) {
             const deger = Math.trunc(point * 10 / maxPoint);
             let str = "";
@@ -123,14 +123,14 @@ module.exports = class HelloCommand extends SlashCommand {
                 Mikrofon kapalı: \`${Math.floor(records.filter(r => r.selfMute).map(r => r.duration).length > 0 ? records.filter(r => r.selfMute).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`
                 Kulaklık kapalı: \`${Math.floor(records.filter(r => r.selfDeaf).map(r => r.duration).length > 0 ? records.filter(r => r.selfMute).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`
                 Yayın Açık: \`${Math.floor(records.filter(r => r.streaming).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`
-                Kamera Açık: \`${Math.floor(records.filter(r => r.videoOn).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`${!mentioned.roles.cache.has(roles.get("cmd-crew").value())?"":stripIndent`
+                Kamera Açık: \`${Math.floor(records.filter(r => r.videoOn).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`${!mentioned.roles.cache.has(roles.get("cmd-crew").value()) ? "" : stripIndent`
                 
                 __**Yetki Atlama Durumu**__
-                ${bar(profile.xp, nextRank.requiredXp)}`}
+                ${bar(profile ? profile.xp : 0, nextRank.requiredXp)}`}
                 `).setThumbnail(mentioned.user.displayAvatarURL({ type: 'gif' })).setColor(mentioned.displayHexColor).setTitle(guild.name);
                 return await ctx.send({
                     embeds: [responseEmbed]
-                }); 
+                });
 
             case 'invite':
                 const DataInv = await InviteData.findOne({ _id: mentioned.user.id });
