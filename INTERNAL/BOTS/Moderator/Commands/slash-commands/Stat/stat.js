@@ -125,6 +125,7 @@ module.exports = class HelloCommand extends SlashCommand {
                 Yayın Açık: \`${Math.floor(records.filter(r => r.streaming).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`
                 Kamera Açık: \`${Math.floor(records.filter(r => r.videoOn).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b, 0) / 60000 : 0)} dakika\`
                 ${!mentioned.roles.cache.has(roles.get("cmd-crew").value()) ? "" : stripIndent`
+                
                 __**Yetki Atlama Durumu**__
                 ${bar(profile ? profile.xp : 0, nextRank.requiredXp)}`}
                 `).setThumbnail(mentioned.user.displayAvatarURL({ type: 'gif' })).setColor(mentioned.displayHexColor).setTitle(guild.name);
