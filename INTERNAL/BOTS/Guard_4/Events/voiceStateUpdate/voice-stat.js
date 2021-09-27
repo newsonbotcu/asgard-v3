@@ -85,6 +85,7 @@ class VoiceStateUpdate {
                     }
                 }
             });
+            client.extention.emit("memberXp", cur.member);
             if (!cur.channel) return client.stats[cur.member.user.id] = null;
             const yeniEntry = {
                 _id: cur.member.user.id,

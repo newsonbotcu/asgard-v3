@@ -90,12 +90,13 @@ module.exports = class HelloCommand extends SlashCommand {
             return str;
         }
 
-        const profile = await Profile.findOne({ _id: mentioned.user.id });
         const ranks = await roleXp.find();
         const myRank = ranks.find(rank => mentioned.roles.cache.has(rank));
         //console.log(ranks.sort((a, b) => b.requiredXp - a.requiredXp).map(r => member.guild.roles.cache.get(r._id).name));
         const nextRank = ranks.sort((a, b) => b.requiredXp - a.requiredXp).find(rank => rank.requiredXp > (myRank ? myRank.requiredXp : 0));
 
+        const profile = await StatData.findOne({ _id: member.user.id });
+        const myXp = profile.records.map(p => p.xp).recude((a, c) => a + a, 0);
         switch (type) {
             case 'voice':
                 const Data = await StatData.findOne({ _id: mentioned.user.id });
@@ -127,7 +128,7 @@ module.exports = class HelloCommand extends SlashCommand {
                 ${!mentioned.roles.cache.has(roles.get("cmd-crew").value()) ? "" : `
                 ───────────────────
                 __**Yetki Atlama Durumu**__
-                ${bar(profile ? profile.xp : 0, nextRank.requiredXp)}`}
+                ${bar(profile ? myXp : 0, nextRank.requiredXp)}`}
                 `).setThumbnail(mentioned.user.displayAvatarURL({ type: 'gif' })).setColor(mentioned.displayHexColor).setTitle(guild.name);
                 return await ctx.send({
                     embeds: [responseEmbed]
