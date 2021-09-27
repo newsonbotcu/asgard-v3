@@ -129,7 +129,7 @@ module.exports = class HelloCommand extends SlashCommand {
                 ${!mentioned.roles.cache.has(roles.get("cmd-crew").value()) ? "" : `
                 ───────────────────
                 __**Yetki Atlama Durumu**__
-                ${bar(myXp, nextRank.requiredXp)}`}
+                ${bar(myXp, nextRank.requiredXp)}`} \`${myXp}/${nextRank.requiredXp}\`
                 `).setThumbnail(mentioned.user.displayAvatarURL({ type: 'gif' })).setColor(mentioned.displayHexColor).setTitle(guild.name);
                 return await ctx.send({
                     embeds: [responseEmbed]
