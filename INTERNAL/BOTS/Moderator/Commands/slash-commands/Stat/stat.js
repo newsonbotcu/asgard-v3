@@ -7,6 +7,8 @@ const InviteData = require('../../../../../MODELS/StatUses/stat_invite');
 const RegData = require('../../../../../MODELS/Datalake/membership');
 const { stripIndent } = require('common-tags');
 const IDS = require('../../../../../BASE/personels.json');
+const Profile = require('../../../../../MODELS/Economy/Profile');
+const roleXp = require('../../../../../MODELS/Economy/xp_role');
 module.exports = class HelloCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
@@ -66,6 +68,34 @@ module.exports = class HelloCommand extends SlashCommand {
         let days = Object.values(ctx.options)[1] || 7;
         const type = Object.values(ctx.options)[0];
         const guild = client.guilds.cache.get(ctx.guildID);
+
+        
+        function bar(point, maxPoint) {
+            const deger = Math.trunc(point * 10 / maxPoint);
+            let str = "";
+            for (let index = 2; index < 9; index++) {
+                if ((deger / index) >= 1) {
+                    str = str + emojis.get("ortabar_dolu").value()
+                } else {
+                    str = str + emojis.get("ortabar").value()
+                }
+            }
+            if (deger === 0) {
+                str = `${emojis.get("solbar").value()}${str}${emojis.get("sagbar").value()}`
+            } else if (deger === 10) {
+                str = `${emojis.get("solbar_dolu").value()}${str}${emojis.get("sagbar_dolu").value()}`
+            } else {
+                str = `${emojis.get("solbar_dolu").value()}${str}${emojis.get("sagbar").value()}`
+            }
+            return str;
+        }
+
+        const profile = await Profile.findOne({ _id: mentioned.user.id });
+        const ranks = await roleXp.find();
+        const myRank = ranks.find(rank => mentioned.roles.cache.has(rank));
+        //console.log(ranks.sort((a, b) => b.requiredXp - a.requiredXp).map(r => member.guild.roles.cache.get(r._id).name));
+        const nextRank = ranks.sort((a, b) => b.requiredXp - a.requiredXp).find(rank => rank.requiredXp > (myRank ? myRank.requiredXp : 0));
+
         switch (type) {
             case 'voice':
                 const Data = await StatData.findOne({ _id: mentioned.user.id });
@@ -93,7 +123,10 @@ module.exports = class HelloCommand extends SlashCommand {
                 Mikrofon kapalı: \`${Math.floor(records.filter(r => r.selfMute).map(r => r.duration).length > 0 ? records.filter(r => r.selfMute).map(r => r.duration).reduce((a, b) => a + b) / 60000 : 0)} dakika\`
                 Kulaklık kapalı: \`${Math.floor(records.filter(r => r.selfDeaf).map(r => r.duration).length > 0 ? records.filter(r => r.selfMute).map(r => r.duration).reduce((a, b) => a + b) / 60000 : 0)} dakika\`
                 Yayın Açık: \`${Math.floor(records.filter(r => r.streaming).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b) / 60000 : 0)} dakika\`
-                Kamera Açık: \`${Math.floor(records.filter(r => r.videoOn).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b) / 60000 : 0)} dakika\`
+                Kamera Açık: \`${Math.floor(records.filter(r => r.videoOn).map(r => r.duration).length > 0 ? records.filter(r => r.streaming).map(r => r.duration).reduce((a, b) => a + b) / 60000 : 0)} dakika\`${!mentioned.roles.cache.has(roles.get("cmd-crew").value())?"":stripIndent`
+                
+                __**Yetki Atlama Durumu**__
+                ${bar(profile.xp, nextRank.requiredXp)}`}
                 `).setThumbnail(mentioned.user.displayAvatarURL({ type: 'gif' })).setColor(mentioned.displayHexColor).setTitle(guild.name);
                 return await ctx.send({
                     embeds: [responseEmbed]
