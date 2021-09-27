@@ -41,7 +41,7 @@ module.exports = class HelloCommand extends SlashCommand {
                     description: 'Kaç güne kadar statları görmek istersin?'
                 },
                 {
-                    type: CommandOptionType.MENTIONABLE || CommandOptionType.USER,
+                    type: CommandOptionType.USER,
                     name: 'kullanıcı',
                     description: 'Hangi kullanıcının statına bakacaksın?'
                 }
