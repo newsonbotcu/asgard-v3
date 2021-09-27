@@ -64,10 +64,10 @@ module.exports = class HelloCommand extends SlashCommand {
         const roles = await low(client.adapters('roles'));
         const emojis = await low(client.adapters('emojis'));
         const channels = await low(client.adapters('channels'));
-        const userID = Object.values(ctx.options)[2] || ctx.member.user.id;
+        const userID = ctx.options["kullanıcı"] || ctx.member.user.id;
         const mentioned = client.guilds.cache.get(ctx.guildID).members.cache.get(userID);
-        let days = Object.values(ctx.options)[1] || 7;
-        const type = Object.values(ctx.options)[0];
+        let days = ctx.options["gün"] || 7;
+        const type = ctx.options["tür"];
         const guild = client.guilds.cache.get(ctx.guildID);
 
 
