@@ -97,6 +97,7 @@ module.exports = class HelloCommand extends SlashCommand {
 
         const profile = await StatData.findOne({ _id: mentioned.user.id });
         const myXp = profile.records.map(p => p.xp).reduce((a, c) => a + c, 0);
+        console.log(myXp);
         switch (type) {
             case 'voice':
                 const Data = await StatData.findOne({ _id: mentioned.user.id });
@@ -128,7 +129,7 @@ module.exports = class HelloCommand extends SlashCommand {
                 ${!mentioned.roles.cache.has(roles.get("cmd-crew").value()) ? "" : `
                 ───────────────────
                 __**Yetki Atlama Durumu**__
-                ${bar(profile ? myXp : 0, nextRank.requiredXp)}`}
+                ${bar(myXp, nextRank.requiredXp)}`}
                 `).setThumbnail(mentioned.user.displayAvatarURL({ type: 'gif' })).setColor(mentioned.displayHexColor).setTitle(guild.name);
                 return await ctx.send({
                     embeds: [responseEmbed]
