@@ -59,6 +59,7 @@ module.exports = class HelloCommand extends SlashCommand {
 
     async run(ctx) {
         const client = ctx.creator.client;
+        console.log(ctx.options);
         const utils = await low(client.adapters('utils'));
         const roles = await low(client.adapters('roles'));
         const emojis = await low(client.adapters('emojis'));
