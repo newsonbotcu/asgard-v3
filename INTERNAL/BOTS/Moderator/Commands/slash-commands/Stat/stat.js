@@ -7,7 +7,7 @@ const InviteData = require('../../../../../MODELS/StatUses/stat_invite');
 const RegData = require('../../../../../MODELS/Datalake/membership');
 const { stripIndent } = require('common-tags');
 const IDS = require('../../../../../BASE/personels.json');
-const Profile = require('../../../../../MODELS/Economy/Profile');
+const Profile = require('../../../../../MODELS/Economy/profile');
 const roleXp = require('../../../../../MODELS/Economy/xp_role');
 module.exports = class HelloCommand extends SlashCommand {
     constructor(creator) {
