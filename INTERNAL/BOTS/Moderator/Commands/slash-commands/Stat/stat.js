@@ -96,7 +96,7 @@ module.exports = class HelloCommand extends SlashCommand {
         const nextRank = ranks.sort((a, b) => b.requiredXp - a.requiredXp).find(rank => rank.requiredXp > (myRank ? myRank.requiredXp : 0));
 
         const profile = await StatData.findOne({ _id: mentioned.user.id });
-        const myXp = profile.records.map(p => p.xp).reduce((a, c) => a + a, 0);
+        const myXp = profile.records.map(p => p.xp).reduce((a, c) => a + c, 0);
         switch (type) {
             case 'voice':
                 const Data = await StatData.findOne({ _id: mentioned.user.id });
