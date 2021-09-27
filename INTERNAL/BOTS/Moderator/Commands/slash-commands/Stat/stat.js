@@ -92,7 +92,7 @@ module.exports = class HelloCommand extends SlashCommand {
         }
 
         const ranks = await roleXp.find();
-        const myRank = ranks.find(rank => mentioned.roles.cache.has(rank));
+        const myRank = ranks.find(rank => mentioned.roles.cache.has(rank._id));
         //console.log(ranks.sort((a, b) => b.requiredXp - a.requiredXp).map(r => member.guild.roles.cache.get(r._id).name));
         const nextRank = ranks.sort((a, b) => a.requiredXp - b.requiredXp).find(rank => rank.requiredXp > (myRank ? myRank.requiredXp : 0));
         console.log(nextRank);
